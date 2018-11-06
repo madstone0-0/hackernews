@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
+import { type } from "os";
 
 class App extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+
     const list = [
       {
         title: "React ",
@@ -21,9 +24,27 @@ class App extends Component {
         objectID: 1
       }
     ];
+
+    this.state = {
+      list
+    };
+
+    this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  // Dismiss stuff
+  onDismiss(id) {
+    const isNotId = item => {
+      return item.objectID !== id;
+    };
+    const updatedList = this.state.list.filter(isNotId);
+    this.setState({ list: updatedList });
+  }
+
+  render() {
     return (
       <div className="App">
-        {list.map(item => (
+        {this.state.list.map(item => (
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
@@ -31,6 +52,14 @@ class App extends Component {
             <span>{item.author} </span>
             <span>{item.num_comments} comments </span>
             <span>{item.points} points </span>
+            <span>
+              <button
+                onClick={() => this.onDismiss(item.objectID)}
+                type="button"
+              >
+                Button
+              </button>
+            </span>
           </div>
         ))}
       </div>
