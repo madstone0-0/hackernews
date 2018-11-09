@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
 
+const DEFAULT_QUERY = "redux";
+const PATH_BASE = "https://hn.algolia.com/api/v1";
+const PATH_SEARCH = "/search";
+const PARAM_SEARCH = "query=";
+
 /* 
 *  Checks whether the term being searched is similar to any
 *  titles.
@@ -81,35 +86,29 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // Contains table information
-    const list = [
-      {
-        title: "React ",
-        url: "https://facebook.github.io/react/",
-        author: "Jordan Walke",
-        num_comments: 3,
-        points: 4,
-        objectID: 0
-      },
-      {
-        title: "Redux ",
-        url: "https://github.com/reactjs/redux",
-        author: "Dan Abramov, Andrew Clark",
-        num_comments: 2,
-        points: 5,
-        objectID: 1
-      }
-    ];
-
     // Sets state
     this.state = {
-      list,
-      searchTerm: ""
+      result: null,
+      searchTerm: DEFAULT_QUERY
     };
 
     // Declare functions for global use with the this identifier
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
+    this.fetchTopStotries = this.fetchTopStotries.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+  }
+
+  // Set top stories
+  setSearchTopStories(result) {
+    this.setState({ result });
+  }
+
+  // Fetch the top stories
+  fetchTopStotries(searchTerm) {
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+      .then(respone => Response.json)
+      .then(result => this.setSearchTopStories(result));
   }
 
   // Dismiss stuff
@@ -126,8 +125,16 @@ class App extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    this.fetchTopStotries(searchTerm);
+  }
+
   render() {
-    const { searchTerm, list } = this.state;
+    const { searchTerm, result } = this.state;
+    if (!result) {
+      return null;
+    }
     return (
       <div className={css(stylesheet.page)}>
         <div className={css(stylesheet.interactions)}>
@@ -136,7 +143,11 @@ class App extends Component {
             Search
           </Search>
         </div>
-        <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+        <Table
+          list={result.hits}
+          pattern={searchTerm}
+          onDismiss={this.onDismiss}
+        />
       </div>
     );
   }
