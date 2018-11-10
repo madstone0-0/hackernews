@@ -7,14 +7,15 @@ const PATH_BASE = "https://hn.algolia.com/api/v1";
 const PATH_SEARCH = "/search";
 const PARAM_SEARCH = "query=";
 
-/* 
-*  Checks whether the term being searched is similar to any
-*  titles.
-*/
+/*
+ *  Checks whether the term being searched is similar to any
+ *  titles.
+ */
 function isSearched(searchTerm) {
     return function(item) {
         return (
-            !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase())
+            !searchTerm ||
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
     };
 }
@@ -95,7 +96,7 @@ class App extends Component {
 
         // Declare functions for global use with the this identifier
         this.setSearchTopStories = this.setSearchTopStories.bind(this);
-        this.fetchTopStotries = this.fetchTopStotries.bind(this);
+        this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
     }
@@ -106,29 +107,24 @@ class App extends Component {
     }
 
     // Fetch the top stories
-    fetchTopStotries(searchTerm) {
+    fetchSearchTopStories(searchTerm) {
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
-            .then(respone => Response.json)
+            .then(response => response.json())
             .then(result => this.setSearchTopStories(result));
     }
 
-    // Dismiss stuff
+    // Dismiss stuffs
     onDismiss(id) {
-        const isNotId = item => {
-            return item.objectID !== id;
-        };
-        const updatedList = this.state.list.filter(isNotId);
-        this.setState({ list: updatedList });
+        const isNotID = item => item.objectID !== id;
+        const updatedHits = this.state.result.hits.filter(isNotID);
+        this.setState({
+            result: (this.state.result, { hits: updatedHits })
+        });
     }
 
     //Search stuff
     onSearchChange(event) {
         this.setState({ searchTerm: event.target.value });
-    }
-
-    componentDidMount() {
-        const { searchTerm } = this.state;
-        this.fetchTopStotries(searchTerm);
     }
 
     render() {
@@ -141,7 +137,7 @@ class App extends Component {
                 <div className={css(stylesheet.interactions)}>
                     {/* Passed values form the App component to the Search an table components */}
                     <Search value={searchTerm} onChange={this.onSearchChange}>
-            Search
+                        Search
                     </Search>
                 </div>
                 <Table
@@ -151,6 +147,11 @@ class App extends Component {
                 />
             </div>
         );
+    }
+
+    componentDidMount() {
+        const { searchTerm } = this.state;
+        this.fetchSearchTopStories(searchTerm);
     }
 }
 
@@ -186,14 +187,16 @@ const Table = ({ list, pattern, onDismiss }) => {
                         <a href={item.url}>{item.title}</a>
                     </span>
                     <span style={midColumn}>{item.author}</span>
-                    <span style={smallColumn}>{item.num_comments} comments</span>
+                    <span style={smallColumn}>
+                        {item.num_comments} comments
+                    </span>
                     <span style={smallColumn}>{item.points} points</span>
                     <span style={smallColumn}>
                         <Button
                             onClick={() => onDismiss(item.objectID)}
                             className={css(stylesheet.buttonInline)}
                         >
-              Dismiss
+                            Dismiss
                         </Button>
                     </span>
                 </div>
