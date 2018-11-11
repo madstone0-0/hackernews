@@ -95,14 +95,14 @@ class App extends Component {
         };
 
         // Declare functions for global use with the this identifier
-        this.setSearchTopStories = this.setSearchTopStories.bind(this);
+        this.setSearchTopstories = this.setSearchTopstories.bind(this);
         this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
     }
 
     // Set top stories
-    setSearchTopStories(result) {
+    setSearchTopstories(result) {
         this.setState({ result });
     }
 
@@ -110,10 +110,10 @@ class App extends Component {
     fetchSearchTopStories(searchTerm) {
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
             .then(response => response.json())
-            .then(result => this.setSearchTopStories(result));
+            .then(result => this.setSearchTopstories(result));
     }
 
-    // Dismiss stuffs
+    // Dismiss stuff
     onDismiss(id) {
         const isNotID = item => item.objectID !== id;
         const updatedHits = this.state.result.hits.filter(isNotID);
@@ -140,11 +140,13 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Table
-                    list={result.hits}
-                    pattern={searchTerm}
-                    onDismiss={this.onDismiss}
-                />
+                {result && (
+                    <Table
+                        list={result.hits}
+                        pattern={searchTerm}
+                        Dismiss={this.onDismiss}
+                    />
+                )}
             </div>
         );
     }
