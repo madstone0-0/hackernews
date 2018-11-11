@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
 
+const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
+const DEFAULT_HPP = 100;
+
 const PATH_BASE = "https://hn.algolia.com/api/v1";
 const PATH_SEARCH = "/search";
 const PARAM_SEARCH = "query=";
+const PARAM_PAGE = "page=";
+const PARAM_HPP = "hitsPerPage=";
 
 /*
  *  Checks whether the term being searched is similar to any
@@ -96,7 +102,7 @@ class App extends Component {
 
         // Declare functions for global use with the this identifier
         this.setSearchTopstories = this.setSearchTopstories.bind(this);
-        this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
+        this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
@@ -104,18 +110,25 @@ class App extends Component {
 
     onSearchSubmit(event) {
         const { searchTerm } = this.state;
-        this.fetchSearchTopStories(searchTerm);
+        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
         event.preventDeafult();
     }
 
     // Set top stories
     setSearchTopstories(result) {
-        this.setState({ result });
+        const { hits, page } = result;
+        const oldHits = page !== 0 ? this.state.result.hits : [];
+        const updatedHits = [oldHits, hits];
+
+        this.setState({ result: { hits: updatedHits, page } });
     }
 
     // Fetch the top stories
-    fetchSearchTopStories(searchTerm) {
-        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+    fetchSearchTopstories(searchTerm, page) {
+        fetch(
+            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}\
+${page}&${PARAM_HPP}${DEFAULT_HPP}`
+        )
             .then(response => response.json())
             .then(result => this.setSearchTopstories(result));
     }
@@ -136,6 +149,7 @@ class App extends Component {
 
     render() {
         const { searchTerm, result } = this.state;
+        const page = (result && result.page) || 0;
         if (!result) {
             return null;
         }
@@ -150,6 +164,13 @@ class App extends Component {
                     >
                         Search
                     </Search>
+                    <Button
+                        onClick={() =>
+                            this.fetchSearchTopstories(searchTerm, page + 1)
+                        }
+                    >
+                        More
+                    </Button>
                 </div>
                 {result && (
                     <Table list={result.hits} Dismiss={this.onDismiss} />
@@ -160,7 +181,7 @@ class App extends Component {
 
     componentDidMount() {
         const { searchTerm } = this.state;
-        this.fetchSearchTopStories(searchTerm);
+        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
     }
 }
 
