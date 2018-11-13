@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
+import axios from "axios";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
@@ -28,15 +29,15 @@ function isSearched(searchTerm) {
 
 const stylesheet = StyleSheet.create({
     page: {
-        margin: "20px"
+        margin: "20px",
     },
 
     interactions: {
-        textAlign: "center"
+        textAlign: "center",
     },
 
     table: {
-        margin: "20px 0"
+        margin: "20px 0",
     },
 
     tableHeader: {
@@ -48,14 +49,14 @@ const stylesheet = StyleSheet.create({
         span: {
             overflow: "hidden",
             textOverflow: "ellipsis",
-            padding: "0 5px"
-        }
+            padding: "0 5px",
+        },
     },
 
     tableEmpty: {
         margin: "200px",
         textAlign: "center",
-        fontSize: "16px"
+        fontSize: "16px",
     },
 
     tableRow: {
@@ -69,8 +70,8 @@ const stylesheet = StyleSheet.create({
         span: {
             overflow: "hidden",
             textOverflow: "ellipsis",
-            padding: "0 5px"
-        }
+            padding: "0 5px",
+        },
     },
 
     buttonInline: {
@@ -81,13 +82,13 @@ const stylesheet = StyleSheet.create({
         webkitFontSmoothing: "inherit",
         padding: "0",
         fontSize: "inherit",
-        cursor: "pointer"
+        cursor: "pointer",
     },
 
     buttonActive: {
         borderRadius: "0",
-        borderBottom: "1px solid #38bb6c"
-    }
+        borderBottom: "1px solid #38bb6c",
+    },
 });
 
 class App extends Component {
@@ -97,7 +98,7 @@ class App extends Component {
         // Sets state
         this.state = {
             result: null,
-            searchTerm: DEFAULT_QUERY
+            searchTerm: DEFAULT_QUERY,
         };
 
         // Declare functions for global use with the this identifier
@@ -125,12 +126,16 @@ class App extends Component {
 
     // Fetch the top stories
     fetchSearchTopstories(searchTerm, page) {
-        fetch(
-            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}\
-${page}&${PARAM_HPP}${DEFAULT_HPP}`
+        axios(
+            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
         )
             .then(response => response.json())
-            .then(result => this.setSearchTopstories(result));
+            .then(result => this.setSearchTopstories(result))
+
+            .catch(error =>
+                // eslint-disable-next-line no-console
+                console.error("Error occured during fetch"),
+            );
     }
 
     // Dismiss stuff
@@ -138,7 +143,7 @@ ${page}&${PARAM_HPP}${DEFAULT_HPP}`
         const isNotID = item => item.objectID !== id;
         const updatedHits = this.state.result.hits.filter(isNotID);
         this.setState({
-            result: (this.state.result, { hits: updatedHits })
+            result: (this.state.result, { hits: updatedHits }),
         });
     }
 
@@ -194,13 +199,13 @@ const Search = ({ value, onChange, children, onSubmit }) => {
 };
 
 const largeColumn = {
-    width: "40%"
+    width: "40%",
 };
 const midColumn = {
-    width: "30%"
+    width: "30%",
 };
 const smallColumn = {
-    width: "10%"
+    width: "10%",
 };
 
 // Functional stateless component Table to handle the appearance of the table

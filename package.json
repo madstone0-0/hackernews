@@ -1,9 +1,10 @@
 {
   "name": "hackernews",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "author": "madstone0-0",
   "dependencies": {
+    "axios": "^18.0.0",
     "aphrodite": "^2.2.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
