@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
-import axios from "axios";
+import {} from "superagent";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
@@ -112,7 +112,7 @@ class App extends Component {
     onSearchSubmit(event) {
         const { searchTerm } = this.state;
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-        event.preventDeafult();
+        event.preventDefault();
     }
 
     // Set top stories
@@ -126,16 +126,11 @@ class App extends Component {
 
     // Fetch the top stories
     fetchSearchTopstories(searchTerm, page) {
-        axios(
+        fetch(
             `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
         )
             .then(response => response.json())
-            .then(result => this.setSearchTopstories(result))
-
-            .catch(error =>
-                // eslint-disable-next-line no-console
-                console.error("Error occured during fetch"),
-            );
+            .then(result => this.setSearchTopstories(result));
     }
 
     // Dismiss stuff
@@ -169,6 +164,11 @@ class App extends Component {
                     >
                         Search
                     </Search>
+                </div>
+                {result && (
+                    <Table list={result.hits} Dismiss={this.onDismiss} />
+                )}
+                <div className={css(stylesheet.interactions)}>
                     <Button
                         onClick={() =>
                             this.fetchSearchTopstories(searchTerm, page + 1)
@@ -177,9 +177,6 @@ class App extends Component {
                         More
                     </Button>
                 </div>
-                {result && (
-                    <Table list={result.hits} Dismiss={this.onDismiss} />
-                )}
             </div>
         );
     }
