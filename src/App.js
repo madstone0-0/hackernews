@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
-import {} from "superagent";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
@@ -133,6 +132,11 @@ class App extends Component {
             .then(result => this.setSearchTopstories(result));
     }
 
+    componentDidMount() {
+        const { searchTerm } = this.state;
+        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
+    }
+
     // Dismiss stuff
     onDismiss(id) {
         const isNotID = item => item.objectID !== id;
@@ -153,6 +157,9 @@ class App extends Component {
         if (!result) {
             return null;
         }
+        // const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
+        // eslint-disable-next-line no-console
+        // console.log(url);
         return (
             <div className={css(stylesheet.page)}>
                 <div className={css(stylesheet.interactions)}>
@@ -166,7 +173,7 @@ class App extends Component {
                     </Search>
                 </div>
                 {result && (
-                    <Table list={result.hits} Dismiss={this.onDismiss} />
+                    <Table list={result.hits} onDismiss={this.onDismiss} />
                 )}
                 <div className={css(stylesheet.interactions)}>
                     <Button
@@ -180,20 +187,15 @@ class App extends Component {
             </div>
         );
     }
-
-    componentDidMount() {
-        const { searchTerm } = this.state;
-        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-    }
 }
 
 // Functional stateless component Search to handle the search function
-const Search = ({ value, onChange, children, onSubmit }) => {
+const Search = ({ value, onChange, children, onSubmit }) => (
     <form onSubmit={onSubmit}>
         <input type="text" value={value} onChange={onChange} />
         <button type="submit">{children}</button>
-    </form>;
-};
+    </form>
+);
 
 const largeColumn = {
     width: "40%",
@@ -206,33 +208,37 @@ const smallColumn = {
 };
 
 // Functional stateless component Table to handle the appearance of the table
-const Table = ({ list, onDismiss }) => {
+const Table = ({ list, onDismiss }) => (
     <div className={css(stylesheet.table)}>
-        {list.map(item => (
-            <div key={item.objectID} className={css(stylesheet.tableRow)}>
-                <span style={largeColumn}>
-                    <a href={item.url}>{item.title}</a>
-                </span>
-                <span style={midColumn}>{item.author}</span>
-                <span style={smallColumn}>{item.num_comments} comments</span>
-                <span style={smallColumn}>{item.points} points</span>
-                <span style={smallColumn}>
-                    <Button
-                        onClick={() => onDismiss(item.objectID)}
-                        className={css(stylesheet.buttonInline)}
-                    >
-                        Dismiss
-                    </Button>
-                </span>
-            </div>
-        ))}
-    </div>;
-};
+        {list.map(item => {
+            return (
+                <div key={item.objectID} className={css(stylesheet.tableRow)}>
+                    <span key={item.objectID} style={largeColumn}>
+                        <a href={item.url}>{item.title}</a>
+                    </span>
+                    <span style={midColumn}>{item.author}</span>
+                    <span style={smallColumn}>
+                        {item.num_comments} comments
+                    </span>
+                    <span style={smallColumn}>{item.points} points</span>
+                    <span style={smallColumn}>
+                        <Button
+                            onClick={() => onDismiss(item.objectID)}
+                            className={css(stylesheet.buttonInline)}
+                        >
+                            Dismiss
+                        </Button>
+                    </span>
+                </div>
+            );
+        })}
+    </div>
+);
 
-const Button = ({ onClick, className = "", children }) => {
+const Button = ({ onClick, className = "", children }) => (
     <button type="button" onClick={onClick} className={className}>
         {children}
-    </button>;
-};
+    </button>
+);
 
 export default App;
