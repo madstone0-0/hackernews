@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
+import axios from "axios";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
@@ -12,19 +13,6 @@ const PATH_SEARCH = "/search";
 const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
-
-/*
- *  Checks whether the term being searched is similar to any
- *  titles.
- */
-function isSearched(searchTerm) {
-    return function(item) {
-        return (
-            !searchTerm ||
-            item.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    };
-}
 
 const stylesheet = StyleSheet.create({
     page: {
@@ -94,10 +82,11 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        // Sets state
+        // initializies state
         this.state = {
             result: null,
             searchTerm: DEFAULT_QUERY,
+            error: null,
         };
 
         // Declare functions for global use with the this identifier
@@ -108,6 +97,7 @@ class App extends Component {
         this.onSearchChange = this.onSearchChange.bind(this);
     }
 
+    // OnSubmit function for search button enables server side searching
     onSearchSubmit(event) {
         const { searchTerm } = this.state;
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
@@ -125,19 +115,15 @@ class App extends Component {
 
     // Fetch the top stories
     fetchSearchTopstories(searchTerm, page) {
-        fetch(
+        axios(
             `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
         )
             .then(response => response.json())
-            .then(result => this.setSearchTopstories(result));
+            .then(result => this.setSearchTopstories(result))
+            .catch(error => this.setState({ error }));
     }
 
-    componentDidMount() {
-        const { searchTerm } = this.state;
-        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-    }
-
-    // Dismiss stuff
+    // Dismiss stories
     onDismiss(id) {
         const isNotID = item => item.objectID !== id;
         const updatedHits = this.state.result.hits.filter(isNotID);
@@ -146,7 +132,7 @@ class App extends Component {
         });
     }
 
-    //Search stuff
+    //Search stories
     onSearchChange(event) {
         this.setState({ searchTerm: event.target.value });
     }
@@ -157,13 +143,11 @@ class App extends Component {
         if (!result) {
             return null;
         }
-        // const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
-        // eslint-disable-next-line no-console
-        // console.log(url);
+
         return (
             <div className={css(stylesheet.page)}>
                 <div className={css(stylesheet.interactions)}>
-                    {/* Passed values form the App component to the Search an table components */}
+                    {/* Passed values from the App component to the Search an table components */}
                     <Search
                         value={searchTerm}
                         onChange={this.onSearchChange}
@@ -187,13 +171,18 @@ class App extends Component {
             </div>
         );
     }
+
+    componentDidMount() {
+        const { searchTerm } = this.state;
+        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
+    }
 }
 
 // Functional stateless component Search to handle the search function
 const Search = ({ value, onChange, children, onSubmit }) => (
     <form onSubmit={onSubmit}>
         <input type="text" value={value} onChange={onChange} />
-        <button type="submit">{children}</button>
+        <button type="submit"><span className="glyphicon glyphicon-search"></span> {children}</button>
     </form>
 );
 
@@ -208,12 +197,12 @@ const smallColumn = {
 };
 
 // Functional stateless component Table to handle the appearance of the table
-const Table = ({ list, onDismiss }) => (
-    <div className={css(stylesheet.table)}>
-        {list.map(item => {
-            return (
+const Table = ({ list, onDismiss }) => {
+    return (
+        <div className={css(stylesheet.table)}>
+            {list.map(item => (
                 <div key={item.objectID} className={css(stylesheet.tableRow)}>
-                    <span key={item.objectID} style={largeColumn}>
+                    <span style={largeColumn}>
                         <a href={item.url}>{item.title}</a>
                     </span>
                     <span style={midColumn}>{item.author}</span>
@@ -230,10 +219,10 @@ const Table = ({ list, onDismiss }) => (
                         </Button>
                     </span>
                 </div>
-            );
-        })}
-    </div>
-);
+            ))}
+        </div>
+    );
+};
 
 const Button = ({ onClick, className = "", children }) => (
     <button type="button" onClick={onClick} className={className}>
