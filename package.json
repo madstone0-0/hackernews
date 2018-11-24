@@ -4,6 +4,7 @@
   "private": true,
   "author": "madstone0-0",
   "dependencies": {
+    "prop-types": "^15.6.2",
     "axios": "^0.18.0",
     "aphrodite": "^2.2.3",
     "react": "^16.6.0",

@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 const DEFAULT_PAGE = 0;
@@ -242,10 +243,39 @@ const Table = ({ list, onDismiss }) => (
     </div>
 );
 
-const Button = ({ onClick, className = "", children }) => (
+const Button = ({ onClick, className, children }) => (
     <button type="button" onClick={onClick} className={className}>
         {children}
     </button>
 );
 
+Button.defaultProps = {
+    className: "",
+};
+
+Button.propTypes = {
+    onClick: PropTypes.func.isReqiured,
+    className: PropTypes.string,
+    children: PropTypes.node.isReqiured,
+};
+
+Table.propTypes = {
+    list: PropTypes.arrayOf(
+        PropTypes.shape({
+            objectID: PropTypes.string.isRequired,
+            author: PropTypes.string,
+            url: PropTypes.string,
+            num_comments: PropTypes.number,
+            points: PropTypes.number,
+        }),
+    ).isRequired,
+    onDismiss: PropTypes.func.isRequired,
+};
+
+Search.propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func.isReqiured,
+    children: PropTypes.node.isReqiured,
+    onSubmit: PropTypes.func.isReqiured,
+};
 export default App;
