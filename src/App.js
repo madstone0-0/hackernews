@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
-import { StyleSheet, css } from "aphrodite";
 import PropTypes from "prop-types";
-import axios from "axios";
+import "./App.css";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_QUERY = "redux";
@@ -16,69 +15,6 @@ const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 const TAG = "tags=story";
 
-const stylesheet = StyleSheet.create({
-    page: {
-        margin: "20px",
-    },
-
-    interactions: {
-        textAlign: "center",
-    },
-
-    table: {
-        margin: "20px 0",
-    },
-
-    tableHeader: {
-        display: "flex",
-        lineHeight: "24px",
-        fontSize: "16px",
-        padding: "0 10px",
-        justifyContent: "space-between",
-        span: {
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            padding: "0 5px",
-        },
-    },
-
-    tableEmpty: {
-        margin: "200px",
-        textAlign: "center",
-        fontSize: "16px",
-    },
-
-    tableRow: {
-        display: "flex",
-        lineHeight: "24px",
-        whiteSpace: "nowrap",
-        margin: "10px 0",
-        padding: "10px",
-        background: "#ffffff",
-        border: "1px solid #e3e3e3",
-        span: {
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            padding: "0 5px",
-        },
-    },
-
-    buttonInline: {
-        borderWidth: "0",
-        background: "transparent",
-        color: "inherit",
-        textAlign: "inherit",
-        webkitFontSmoothing: "inherit",
-        padding: "0",
-        fontSize: "inherit",
-        cursor: "pointer",
-    },
-
-    buttonActive: {
-        borderRadius: "0",
-        borderBottom: "1px solid #38bb6c",
-    },
-});
 
 class App extends Component {
     constructor(props) {
@@ -89,7 +25,7 @@ class App extends Component {
             result: null,
             searchKey: "",
             searchTerm: DEFAULT_QUERY,
-            error: null,
+            error: null
         };
 
         // Declare functions for global use with the this identifier
@@ -125,16 +61,16 @@ class App extends Component {
 
         this.setState({
             results: {
-                ...results,
-                [searchKey]: { hits: updatedHits, page },
-            },
+                results,
+                [searchKey]: { hits: updatedHits, page }
+            }
         });
     }
 
     // Fetch the top stories
     fetchSearchTopstories(searchTerm, page = 0) {
         fetch(
-            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
+            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
         )
             .then(response => response.json())
             .then(result => this.setSearchTopstories(result))
@@ -155,9 +91,9 @@ class App extends Component {
         const updatedHits = hits.filter(isNotID);
         this.setState({
             results: {
-                ...results,
-                [searchKey]: { hits: updatedHits, page },
-            },
+                results,
+                [searchKey]: { hits: updatedHits, page }
+            }
         });
     }
 
@@ -173,8 +109,8 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div className={css(stylesheet.page)}>
-                <div className={css(stylesheet.interactions)}>
+            <div className="page">
+                <div className="interactions">
                     {/* Passed values from the App component to the Search an table components */}
                     <Search
                         value={searchTerm}
@@ -184,8 +120,8 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Table list={list} onDismiss={this.onDismiss} />
-                <div className={css(stylesheet.interactions)}>
+                <Table list={list} onDismiss={this.onDismiss}/>
+                <div className="interactions">
                     <Button
                         onClick={() =>
                             this.fetchSearchTopstories(searchKey, page + 1)
@@ -202,28 +138,28 @@ class App extends Component {
 // Functional stateless component Search to handle the search function
 const Search = ({ value, onChange, children, onSubmit }) => (
     <form onSubmit={onSubmit}>
-        <input type="text" value={value} onChange={onChange} />
+        <input type="text" value={value} onChange={onChange}/>
         <button type="submit">
-            <span className="glyphicon glyphicon-search" /> {children}
+            <span className="glyphicon glyphicon-search"/> {children}
         </button>
     </form>
 );
 
 const largeColumn = {
-    width: "40%",
+    width: "40%"
 };
 const midColumn = {
-    width: "30%",
+    width: "30%"
 };
 const smallColumn = {
-    width: "10%",
+    width: "10%"
 };
 
 // Functional stateless component Table to handle the appearance of the table
 const Table = ({ list, onDismiss }) => (
-    <div className={css(stylesheet.table)}>
+    <div className="table">
         {list.map(item => (
-            <div key={item.objectID} className={css(stylesheet.tableRow)}>
+            <div key={item.objectID} className="table-row">
                 <span style={largeColumn}>
                     <a href={item.url}>{item.title}</a>
                 </span>
@@ -233,7 +169,7 @@ const Table = ({ list, onDismiss }) => (
                 <span style={smallColumn}>
                     <Button
                         onClick={() => onDismiss(item.objectID)}
-                        className={css(stylesheet.buttonInline)}
+                        className="button-inline"
                     >
                         Dismiss
                     </Button>
@@ -250,13 +186,13 @@ const Button = ({ onClick, className, children }) => (
 );
 
 Button.defaultProps = {
-    className: "",
+    className: ""
 };
 
 Button.propTypes = {
-    onClick: PropTypes.func.isReqiured,
+    onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
-    children: PropTypes.node.isReqiured,
+    children: PropTypes.node.isRequired
 };
 
 Table.propTypes = {
@@ -266,16 +202,21 @@ Table.propTypes = {
             author: PropTypes.string,
             url: PropTypes.string,
             num_comments: PropTypes.number,
-            points: PropTypes.number,
-        }),
+            points: PropTypes.number
+        })
     ).isRequired,
-    onDismiss: PropTypes.func.isRequired,
+    onDismiss: PropTypes.func.isRequired
 };
 
 Search.propTypes = {
     value: PropTypes.string,
-    onChange: PropTypes.func.isReqiured,
-    children: PropTypes.node.isReqiured,
-    onSubmit: PropTypes.func.isReqiured,
+    onChange: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+    onSubmit: PropTypes.func.isRequired
 };
 export default App;
+export {
+    Search,
+    Button,
+    Table
+};
