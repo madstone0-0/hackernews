@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,no-console */
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -14,7 +14,6 @@ const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 const TAG = "tags=story";
-
 
 class App extends Component {
     constructor(props) {
@@ -125,17 +124,11 @@ class App extends Component {
                 </div>
                 <Table list={list} onDismiss={this.onDismiss}/>
                 <div className="interactions">
-                    {
-                        isLoading
-                            ? <Loading/>
-                            : <Button
-                                onClick={() =>
-                                    this.fetchSearchTopstories(searchKey, page + 1)
-                                }
-                            >
-                                More
-                            </Button>
-                    }
+                    <ButtonWithLoading
+                        isLoading={isLoading}
+                        onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+                        More
+                    </ButtonWithLoading>
                 </div>
             </div>
         );
@@ -146,6 +139,7 @@ class App extends Component {
 class Search extends Component {
     componentDidMount() {
         this.input.focus();
+
     }
 
     render() {
@@ -223,11 +217,16 @@ class Loading extends Component {
     }
 }
 
+const withLoading = (Component) => ({ isLoading, rest }) =>
+    isLoading ? <Loading/> : <Component {...rest}/>;
+
+const ButtonWithLoading = withLoading(Button);
+
 Button.defaultProps = {
     className: ""
 };
 
-Button.propTypes = {
+ButtonWithLoading.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
     children: PropTypes.node.isRequired
