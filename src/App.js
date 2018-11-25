@@ -25,7 +25,8 @@ class App extends Component {
             result: null,
             searchKey: "",
             searchTerm: DEFAULT_QUERY,
-            error: null
+            error: null,
+            isLoading: false
         };
 
         // Declare functions for global use with the this identifier
@@ -63,12 +64,14 @@ class App extends Component {
             results: {
                 results,
                 [searchKey]: { hits: updatedHits, page }
-            }
+            },
+            isLoading: false
         });
     }
 
     // Fetch the top stories
     fetchSearchTopstories(searchTerm, page = 0) {
+        this.setState({ isLoading: true });
         fetch(
             `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
         )
@@ -103,7 +106,7 @@ class App extends Component {
     }
 
     render() {
-        const { searchTerm, results, searchKey } = this.state;
+        const { searchTerm, results, searchKey, isLoading } = this.state;
         const page =
             (results && results[searchKey] && results[searchKey].page) || 0;
         const list =
@@ -122,28 +125,43 @@ class App extends Component {
                 </div>
                 <Table list={list} onDismiss={this.onDismiss}/>
                 <div className="interactions">
-                    <Button
-                        onClick={() =>
-                            this.fetchSearchTopstories(searchKey, page + 1)
-                        }
-                    >
-                        More
-                    </Button>
+                    {
+                        isLoading
+                            ? <Loading/>
+                            : <Button
+                                onClick={() =>
+                                    this.fetchSearchTopstories(searchKey, page + 1)
+                                }
+                            >
+                                More
+                            </Button>
+                    }
                 </div>
             </div>
         );
     }
 }
 
-// Functional stateless component Search to handle the search function
-const Search = ({ value, onChange, children, onSubmit }) => (
-    <form onSubmit={onSubmit}>
-        <input type="text" value={value} onChange={onChange}/>
-        <button type="submit">
-            <span className="glyphicon glyphicon-search"/> {children}
-        </button>
-    </form>
-);
+// Search Component
+class Search extends Component {
+    componentDidMount() {
+        this.input.focus();
+    }
+
+    render() {
+        const { value, onChange, onSubmit, children } = this.props;
+        return (
+            <form onSubmit={onSubmit}>
+                <input type="text" value={value} onChange={onChange} ref={(node) => {
+                    this.input = node;
+                }}/>
+                <button type="submit">
+                    <span className="glyphicon glyphicon-search"/> {children}
+                </button>
+            </form>
+        );
+    }
+}
 
 const largeColumn = {
     width: "40%"
@@ -155,35 +173,55 @@ const smallColumn = {
     width: "10%"
 };
 
-// Functional stateless component Table to handle the appearance of the table
-const Table = ({ list, onDismiss }) => (
-    <div className="table">
-        {list.map(item => (
-            <div key={item.objectID} className="table-row">
-                <span style={largeColumn}>
-                    <a href={item.url}>{item.title}</a>
-                </span>
-                <span style={midColumn}>{item.author}</span>
-                <span style={smallColumn}>{item.num_comments} comments</span>
-                <span style={smallColumn}>{item.points} points</span>
-                <span style={smallColumn}>
-                    <Button
-                        onClick={() => onDismiss(item.objectID)}
-                        className="button-inline"
-                    >
+// Table component
+class Table extends Component {
+    render() {
+        const { list, onDismiss } = this.props;
+        return (
+            <div className="table">
+                {list.map(item => (
+                    <div key={item.objectID} className="table-row">
+                        <span style={largeColumn}>
+                            <a href={item.url}>{item.title}</a>
+                        </span>
+                        <span style={midColumn}>{item.author}</span>
+                        <span style={smallColumn}>{item.num_comments} comments</span>
+                        <span style={smallColumn}>{item.points} points</span>
+                        <span style={smallColumn}>
+                            <Button
+                                onClick={() => onDismiss(item.objectID)}
+                                className="button-inline"
+                            >
                         Dismiss
-                    </Button>
-                </span>
+                            </Button>
+                        </span>
+                    </div>
+                ))}
             </div>
-        ))}
-    </div>
-);
+        );
+    }
+}
 
-const Button = ({ onClick, className, children }) => (
-    <button type="button" onClick={onClick} className={className}>
-        {children}
-    </button>
-);
+class Button extends Component {
+    render() {
+        const { onClick, className, children } = this.props;
+        return (
+            <button type="button" onClick={onClick} className={className}>
+                {children}
+            </button>
+        );
+    }
+}
+
+class Loading extends Component {
+    render() {
+        return (
+            <div>
+                Loading...
+            </div>
+        );
+    }
+}
 
 Button.defaultProps = {
     className: ""
