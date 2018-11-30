@@ -1,19 +1,24 @@
 /* eslint-disable no-unused-vars,no-console */
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
+import { sortBy } from "lodash";
 import PropTypes from "prop-types";
-import "./App.css";
-
-const DEFAULT_PAGE = 0;
-const DEFAULT_QUERY = "redux";
-const DEFAULT_HPP = 100;
-
-const PATH_BASE = "https://hn.algolia.com/api/v1";
-const PATH_SEARCH = "/search";
-const PARAM_SEARCH = "query=";
-const PARAM_PAGE = "page=";
-const PARAM_HPP = "hitsPerPage=";
-const TAG = "tags=story";
+import "./index.css";
+import {
+    DEFAULT_HPP,
+    DEFAULT_PAGE,
+    DEFAULT_QUERY,
+    PARAM_HPP,
+    PARAM_PAGE,
+    PARAM_SEARCH,
+    PATH_BASE,
+    PATH_SEARCH,
+    TAG,
+} from "../constants";
+import Table from "../Table";
+import Search from "../Search";
+import Button from "../Button";
+import Loading from "../Loading";
 
 class App extends Component {
     constructor(props) {
@@ -25,7 +30,9 @@ class App extends Component {
             searchKey: "",
             searchTerm: DEFAULT_QUERY,
             error: null,
-            isLoading: false
+            isLoading: false,
+            sortKey: "NONE",
+            isSortReverse: false,
         };
 
         // Declare functions for global use with the this identifier
@@ -35,6 +42,12 @@ class App extends Component {
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSort = this.onSort.bind(this);
+    }
+
+    onSort(sortKey) {
+        const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse;
+        this.setState({ sortKey, isSortReverse });
     }
 
     needsToSearchTopstories(searchTerm) {
@@ -62,9 +75,9 @@ class App extends Component {
         this.setState({
             results: {
                 results,
-                [searchKey]: { hits: updatedHits, page }
+                [searchKey]: { hits: updatedHits, page },
             },
-            isLoading: false
+            isLoading: false,
         });
     }
 
@@ -72,7 +85,7 @@ class App extends Component {
     fetchSearchTopstories(searchTerm, page = 0) {
         this.setState({ isLoading: true });
         fetch(
-            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
+            `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
         )
             .then(response => response.json())
             .then(result => this.setSearchTopstories(result))
@@ -94,8 +107,8 @@ class App extends Component {
         this.setState({
             results: {
                 results,
-                [searchKey]: { hits: updatedHits, page }
-            }
+                [searchKey]: { hits: updatedHits, page },
+            },
         });
     }
 
@@ -105,7 +118,7 @@ class App extends Component {
     }
 
     render() {
-        const { searchTerm, results, searchKey, isLoading } = this.state;
+        const { searchTerm, results, searchKey, isLoading, sortKey, isSortReverse } = this.state;
         const page =
             (results && results[searchKey] && results[searchKey].page) || 0;
         const list =
@@ -122,11 +135,18 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Table list={list} onDismiss={this.onDismiss}/>
+                <Table
+                    list={list}
+                    onDismiss={this.onDismiss}
+                    sortKey={sortKey}
+                    onSort={this.onSort}
+                    isSortReverse={isSortReverse}
+                />
                 <div className="interactions">
                     <ButtonWithLoading
                         isLoading={isLoading}
-                        onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+                        onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}
+                    >
                         More
                     </ButtonWithLoading>
                 </div>
@@ -135,125 +155,16 @@ class App extends Component {
     }
 }
 
-// Search Component
-class Search extends Component {
-    componentDidMount() {
-        this.input.focus();
 
-    }
-
-    render() {
-        const { value, onChange, onSubmit, children } = this.props;
-        return (
-            <form onSubmit={onSubmit}>
-                <input type="text" value={value} onChange={onChange} ref={(node) => {
-                    this.input = node;
-                }}/>
-                <button type="submit">
-                    <span className="glyphicon glyphicon-search"/> {children}
-                </button>
-            </form>
-        );
-    }
-}
-
-const largeColumn = {
-    width: "40%"
-};
-const midColumn = {
-    width: "30%"
-};
-const smallColumn = {
-    width: "10%"
-};
-
-// Table component
-class Table extends Component {
-    render() {
-        const { list, onDismiss } = this.props;
-        return (
-            <div className="table">
-                {list.map(item => (
-                    <div key={item.objectID} className="table-row">
-                        <span style={largeColumn}>
-                            <a href={item.url}>{item.title}</a>
-                        </span>
-                        <span style={midColumn}>{item.author}</span>
-                        <span style={smallColumn}>{item.num_comments} comments</span>
-                        <span style={smallColumn}>{item.points} points</span>
-                        <span style={smallColumn}>
-                            <Button
-                                onClick={() => onDismiss(item.objectID)}
-                                className="button-inline"
-                            >
-                        Dismiss
-                            </Button>
-                        </span>
-                    </div>
-                ))}
-            </div>
-        );
-    }
-}
-
-class Button extends Component {
-    render() {
-        const { onClick, className, children } = this.props;
-        return (
-            <button type="button" onClick={onClick} className={className}>
-                {children}
-            </button>
-        );
-    }
-}
-
-class Loading extends Component {
-    render() {
-        return (
-            <div>
-                Loading...
-            </div>
-        );
-    }
-}
-
-const withLoading = (Component) => ({ isLoading, rest }) =>
-    isLoading ? <Loading/> : <Component {...rest}/>;
+const withLoading = Component => ({ isLoading, ...rest }) =>
+    isLoading ? <Loading /> : <Component {...rest} />;
 
 const ButtonWithLoading = withLoading(Button);
-
-Button.defaultProps = {
-    className: ""
-};
 
 ButtonWithLoading.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
-    children: PropTypes.node.isRequired
-};
-
-Table.propTypes = {
-    list: PropTypes.arrayOf(
-        PropTypes.shape({
-            objectID: PropTypes.string.isRequired,
-            author: PropTypes.string,
-            url: PropTypes.string,
-            num_comments: PropTypes.number,
-            points: PropTypes.number
-        })
-    ).isRequired,
-    onDismiss: PropTypes.func.isRequired
-};
-
-Search.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
-    onSubmit: PropTypes.func.isRequired
 };
+
 export default App;
-export {
-    Search,
-    Button,
-    Table
-};
