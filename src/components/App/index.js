@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { sortBy } from "lodash";
-import PropTypes from "prop-types";
 import "./index.css";
 import {
     DEFAULT_HPP,
@@ -17,8 +16,7 @@ import {
 } from "../constants";
 import Table from "../Table";
 import Search from "../Search";
-import Button from "../Button";
-import Loading from "../Loading";
+import ButtonWithLoading from "../ButtonWithLoading";
 
 class App extends Component {
     constructor(props) {
@@ -31,24 +29,17 @@ class App extends Component {
             searchTerm: DEFAULT_QUERY,
             error: null,
             isLoading: false,
-            sortKey: "NONE",
-            isSortReverse: false,
         };
 
-        // Declare functions for global use with the this identifier
+        // Bound functions
         this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);
         this.setSearchTopstories = this.setSearchTopstories.bind(this);
         this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        this.onSort = this.onSort.bind(this);
     }
 
-    onSort(sortKey) {
-        const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse;
-        this.setState({ sortKey, isSortReverse });
-    }
 
     needsToSearchTopstories(searchTerm) {
         return !this.state.results[searchTerm];
@@ -118,7 +109,7 @@ class App extends Component {
     }
 
     render() {
-        const { searchTerm, results, searchKey, isLoading, sortKey, isSortReverse } = this.state;
+        const { searchTerm, results, searchKey, isLoading } = this.state;
         const page =
             (results && results[searchKey] && results[searchKey].page) || 0;
         const list =
@@ -138,9 +129,6 @@ class App extends Component {
                 <Table
                     list={list}
                     onDismiss={this.onDismiss}
-                    sortKey={sortKey}
-                    onSort={this.onSort}
-                    isSortReverse={isSortReverse}
                 />
                 <div className="interactions">
                     <ButtonWithLoading
@@ -155,16 +143,5 @@ class App extends Component {
     }
 }
 
-
-const withLoading = Component => ({ isLoading, ...rest }) =>
-    isLoading ? <Loading /> : <Component {...rest} />;
-
-const ButtonWithLoading = withLoading(Button);
-
-ButtonWithLoading.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    children: PropTypes.node.isRequired,
-};
 
 export default App;

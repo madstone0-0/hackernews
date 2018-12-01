@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 
 // Search Component
 class Search extends Component {
-    componentDidMount() {
-        this.input.focus();
-    }
-
     render() {
         const { value, onChange, onSubmit, children } = this.props;
         return (
@@ -16,9 +12,6 @@ class Search extends Component {
                     type="text"
                     value={value}
                     onChange={onChange}
-                    ref={node => {
-                        this.input = node;
-                    }}
                 />
                 <button type="submit" className="btn btn-info">
                     <span className="glyphicon glyphicon-search"/> {children}
