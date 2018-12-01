@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 // Search Component
@@ -13,9 +15,9 @@ class Search extends Component {
                     value={value}
                     onChange={onChange}
                 />
-                <button type="submit" className="btn btn-info">
+                <Button bsSize="medium" bsStyle="primary" type="submit">
                     <span className="glyphicon glyphicon-search"/> {children}
-                </button>
+                </Button>
             </form>
         );
     }
