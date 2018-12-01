@@ -4,9 +4,17 @@
   "private": true,
   "author": "madstone0-0",
   "dependencies": {
-    "axios": "^0.18.0",
     "aphrodite": "^2.2.3",
+    "axios": "^0.18.0",
+    "bootstrap": "^3.3.7",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "popper.js": "^1.14.6",
+    "prop-types": "^15.6.2",
     "react": "^16.6.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.0",
     "react-scripts": "2.1.1"
   },
@@ -24,5 +32,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "enzyme": "^3.7.0",
+    "react-test-renderer": "^16.6.3",
+    "rekit-core": "^2.3.4",
+    "rekit-studio": "^2.4.1"
+  }
 }

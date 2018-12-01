@@ -19,6 +19,7 @@ yarn-error.log*
 *.log
 /package-lock.json
 Thumbs.db
+/_templates
 
 # Webstorm
 .idea/*
