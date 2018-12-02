@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,no-undef */
 import React, { Component } from "react";
-import { sortBy } from "lodash";
 import Button from "../Button";
 import "./index.css";
 import PropTypes from "prop-types";
+import classNames from "classnames";
+import { sortBy } from "lodash";
 
 const SORTS = {
     NONE: list => list,
@@ -15,16 +16,13 @@ const SORTS = {
 
 // TODO import classnames and improve this
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
-    const sortClass = ["button-inline"];
-
-    if (sortKey === activeSortKey) {
-        sortClass.push("button-active");
-    }
+    const sortClass = classNames("button-inline", {
+        "button-active": sortKey === activeSortKey,
+    });
 
     return (
-        <Button onClick={() => onSort(sortKey)} className={sortClass.join(" ")}>
-            {" "}
-            {children}{" "}
+        <Button onClick={() => onSort(sortKey)} className={sortClass}>
+            {children}
         </Button>
     );
 };
@@ -53,14 +51,16 @@ class Table extends Component {
     }
 
     onSort(sortKey) {
-        const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse;
+        const isSortReverse =
+            this.state.sortKey === sortKey && !this.state.isSortReverse;
         this.setState({ sortKey, isSortReverse });
     }
 
-
     render() {
         const { list, onDismiss } = this.props;
+
         const { sortKey, isSortReverse } = this.state;
+
         const sortedList = SORTS[sortKey](list);
         const reverseSortedList = isSortReverse
             ? sortedList.reverse()
@@ -70,45 +70,67 @@ class Table extends Component {
             <div className="table">
                 <div className="table-header">
                     <span style={{ width: "40%" }}>
-                        <Sort sortKey={"TITLE"} onSort={this.onSort} activeSortKey={sortKey}>
-              Title
+                        <Sort
+                            sortKey={"TITLE"}
+                            onSort={this.onSort}
+                            activeSortKey={sortKey}
+                        >
+                            Title
                         </Sort>
                     </span>
                     <span style={{ width: "30%" }}>
-                        <Sort sortKey={"AUTHOR"} onSort={this.onSort} activeSortKey={sortKey}>
-              Author
+                        <Sort
+                            sortKey={"AUTHOR"}
+                            onSort={this.onSort}
+                            activeSortKey={sortKey}
+                        >
+                            Author
                         </Sort>
                     </span>
                     <span style={{ width: "10%" }}>
-                        <Sort sortKey={"COMMENTS"} onSort={this.onSort} activeSortKey={sortKey}>
-              Comments
+                        <Sort
+                            sortKey={"COMMENTS"}
+                            onSort={this.onSort}
+                            activeSortKey={sortKey}
+                        >
+                            Comments
                         </Sort>
                     </span>
                     <span style={{ width: "10%" }}>
-                        <Sort sortKey={"POINTS"} onSort={this.onSort} activeSortKey={sortKey}>
-              Points
+                        <Sort
+                            sortKey={"POINTS"}
+                            onSort={this.onSort}
+                            activeSortKey={sortKey}
+                        >
+                            Points
                         </Sort>
                     </span>
                     <span style={{ width: "10%" }}>Archive</span>
                 </div>
-                {reverseSortedList.map(item => (
-                    <div key={item.objectID} className="table-row row">
-                        <span style={largeColumn} className="col-md-12">
-                            <a href={item.url} className="col-md-12">{item.title}</a>
-                        </span>
-                        <span style={midColumn} className="col-md-12">{item.author}</span>
-                        <span style={smallColumn} className="col-md-12">{item.num_comments} comments</span>
-                        <span style={smallColumn} className="col-md-12">{item.points} points</span>
-                        <span style={smallColumn} className="col-md-12">
-                            <Button
-                                onClick={() => onDismiss(item.objectID)}
-                                className="button-inline"
-                            >
-                Dismiss
-                            </Button>
-                        </span>
-                    </div>
-                ))}
+                {reverseSortedList.map(item => {
+                    return (
+                        <div key={item.objectID} className="table-row">
+                            <span style={largeColumn}>
+                                <a href={item.url}>{item.title}</a>
+                            </span>
+                            <span style={midColumn}>{item.author}</span>
+                            <span style={smallColumn}>
+                                {item.num_comments} comments
+                            </span>
+                            <span style={smallColumn}>
+                                {item.points} points
+                            </span>
+                            <span style={smallColumn}>
+                                <Button
+                                    onClick={() => onDismiss(item.objectID)}
+                                    className="button-inline btn-info btn-primary"
+                                >
+                                    Dismiss
+                                </Button>
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
         );
     }

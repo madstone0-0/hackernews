@@ -15,7 +15,7 @@ class Search extends Component {
                     value={value}
                     onChange={onChange}
                 />
-                <Button bsSize="lg" bsStyle="primary" type="submit">
+                <Button bsStyle="primary" type="submit">
                     <span className="glyphicon glyphicon-search"/> {children}
                 </Button>
             </form>

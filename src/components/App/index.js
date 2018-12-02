@@ -38,34 +38,33 @@ class App extends Component {
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        this.updateSearchTopstoriesState = this.updateSearchTopstoriesState.bind(this);
+        // this.updateSearchTopstoriesState = this.updateSearchTopstoriesState.bind(
+        //     this,
+        // );
     }
 
-    updateSearchTopstoriesState(hits, page) {
-        return (
-            (prevState) => {
-                const { searchKey, results } = prevState;
+    /* TODO fix this */
+    // updateSearchTopstoriesState(hits, page) {
+    //     return prevState => {
+    //         const { searchKey, results } = prevState;
 
-                const oldHits = results && results[searchKey]
-                    ? results[searchKey].hits
-                    : [];
+    //         const oldHits =
+    //             results && results[searchKey] ? results[searchKey].hits : [];
 
-                const updatedHits = {
-                    ...oldHits,
-                    ...hits,
-                };
+    //         const updatedHits = {
+    //             ...oldHits,
+    //             ...hits,
+    //         };
 
-                return {
-                    results: {
-                        ...results,
-                        [searchKey]: { hits: updatedHits, page },
-                    },
-                    isLoading: false,
-                };
-            }
-        );
-    }
-
+    //         return {
+    //             results: {
+    //                 ...results,
+    //                 [searchKey]: { hits: updatedHits, page },
+    //             },
+    //             isLoading: false,
+    //         };
+    //     };
+    // }
 
     needsToSearchTopstories(searchTerm) {
         return !this.state.results[searchTerm];
@@ -73,18 +72,29 @@ class App extends Component {
 
     // OnSubmit function for search button enables server side searching
     onSearchSubmit(event) {
-        event.preventDefault();
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         if (this.needsToSearchTopstories(searchTerm)) {
             this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
         }
+        event.preventDefault();
     }
 
     // Set top stories
     setSearchTopstories(result) {
         const { hits, page } = result;
-        this.setState(this.updateSearchTopstoriesState(hits, page));
+        const { searchKey, results } = this.state;
+        const oldHits =
+            results && results[searchKey] ? results[searchKey].hits : [];
+        const updatedHits = [...oldHits, ...hits];
+
+        this.setState({
+            results: {
+                results,
+                [searchKey]: { hits: updatedHits, page },
+            },
+            isLoading: false,
+        });
     }
 
     // Fetch the top stories
@@ -124,7 +134,7 @@ class App extends Component {
     }
 
     render() {
-        const { searchTerm, results, searchKey, isLoading } = this.state;
+        const { searchTerm, results, searchKey, isLoading, error } = this.state;
         const page =
             (results && results[searchKey] && results[searchKey].page) || 0;
         const list =
@@ -141,14 +151,19 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Table
-                    list={list}
-                    onDismiss={this.onDismiss}
-                />
+                {error ? (
+                    <div className="interactions">
+                        <p>Something went wrong</p>
+                    </div>
+                ) : (
+                    <Table list={list} onDismiss={this.onDismiss} />
+                )}
                 <div className="interactions">
                     <ButtonWithLoading
                         isLoading={isLoading}
-                        onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}
+                        onClick={() =>
+                            this.fetchSearchTopstories(searchKey, page + 1)
+                        }
                     >
                         More
                     </ButtonWithLoading>
@@ -157,6 +172,5 @@ class App extends Component {
         );
     }
 }
-
 
 export default App;
