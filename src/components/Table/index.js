@@ -14,7 +14,6 @@ const SORTS = {
     POINTS: list => sortBy(list, "points").reverse(),
 };
 
-// TODO import classnames and improve this
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
     const sortClass = classNames("button-inline", {
         "button-active": sortKey === activeSortKey,
