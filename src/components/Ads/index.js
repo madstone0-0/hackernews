@@ -1,19 +1,25 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { Component } from "react";
+import AdSense from "react-adsense";
 
-export default class Ad extends React.Component {
-  componentDidMount () {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }
+class Ads extends Component {
+    componentDidMount() {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
 
-render () {
-    return (
-      <div className='ad'>
-        <ins className='adsbygoogle'
-          style={{ display: 'block' }}
-          data-ad-client='ca-pub-1454292768438166'
-          data-ad-slot='xxxxxxxxxx'
-          data-ad-format='auto' />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div class="ad">
+                <AdSense.Google
+                    client="ca-pub-1454292768438166"
+                    slot="7806394673"
+                    style={{ display: "block" }}
+                    format="auto"
+                    responsive="true"
+                />
+            </div>
+        );
+    }
 }
+
+export default Ads;
