@@ -17,7 +17,6 @@ import {
 import Table from "../Table";
 import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
-import Ads from "../Ads";
 
 class App extends Component {
     constructor(props) {
@@ -152,7 +151,6 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Ads />
                 {error ? (
                     <div className="interactions">
                         <p>Something went wrong</p>
