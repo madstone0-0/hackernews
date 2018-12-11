@@ -17,6 +17,7 @@ import {
 import Table from "../Table";
 import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
+import Header from "../Header";
 
 class App extends Component {
     constructor(props) {
@@ -30,14 +31,6 @@ class App extends Component {
             error: null,
             isLoading: false,
         };
-
-        // Bound functions
-        this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);
-        this.setSearchTopstories = this.setSearchTopstories.bind(this);
-        this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
-        this.onSearchSubmit = this.onSearchSubmit.bind(this);
-        this.onDismiss = this.onDismiss.bind(this);
-        this.onSearchChange = this.onSearchChange.bind(this);
     }
 
     /* TODO fix this */
@@ -61,22 +54,22 @@ class App extends Component {
         };
     };
 
-    needsToSearchTopstories(searchTerm) {
+    needsToSearchTopstories = searchTerm => {
         return !this.state.results[searchTerm];
-    }
+    };
 
     // OnSubmit function for search button enables server side searching
-    onSearchSubmit(event) {
+    onSearchSubmit = event => {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         if (this.needsToSearchTopstories(searchTerm)) {
             this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
         }
         event.preventDefault();
-    }
+    };
 
     // Set top stories
-    setSearchTopstories(result) {
+    setSearchTopstories = result => {
         const { hits, page } = result;
         // const { searchKey, results } = this.state;
         // const oldHits =
@@ -91,10 +84,10 @@ class App extends Component {
         //     isLoading: false,
         // });
         this.setState(this.updateSearchTopstoriesState(hits, page));
-    }
+    };
 
     // Fetch the top stories
-    fetchSearchTopstories(searchTerm, page = 0) {
+    fetchSearchTopstories = (searchTerm, page = 0) => {
         this.setState({ isLoading: true });
         fetch(
             `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${TAG}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
@@ -102,16 +95,16 @@ class App extends Component {
             .then(response => response.json())
             .then(result => this.setSearchTopstories(result))
             .catch(error => this.setState({ error }));
-    }
+    };
 
-    componentDidMount() {
+    componentDidMount = () => {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-    }
+    };
 
     // Dismiss stories
-    onDismiss(id) {
+    onDismiss = id => {
         const { searchKey, results } = this.state;
         const { hits, page } = results[searchKey];
         const isNotID = item => item.objectID !== id;
@@ -122,12 +115,12 @@ class App extends Component {
                 [searchKey]: { hits: updatedHits, page },
             },
         });
-    }
+    };
 
     //Search stories
-    onSearchChange(event) {
+    onSearchChange = event => {
         this.setState({ searchTerm: event.target.value });
-    }
+    };
 
     render() {
         const { searchTerm, results, searchKey, isLoading, error } = this.state;
@@ -136,33 +129,36 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div className="page">
-                <div className="interactions">
-                    {/* Passed values from the App component to the Search an table components */}
-                    <Search
-                        value={searchTerm}
-                        onChange={this.onSearchChange}
-                        onSubmit={this.onSearchSubmit}
-                    >
-                        Search
-                    </Search>
-                </div>
-                {error ? (
+            <div className="container-fluid">
+                <Header />
+                <div className="page">
                     <div className="interactions">
-                        <p>Something went wrong</p>
+                        {/* Passed values from the App component to the Search an table components */}
+                        <Search
+                            value={searchTerm}
+                            onChange={this.onSearchChange}
+                            onSubmit={this.onSearchSubmit}
+                        >
+                            Search
+                        </Search>
                     </div>
-                ) : (
-                    <Table list={list} onDismiss={this.onDismiss} />
-                )}
-                <div className="interactions">
-                    <ButtonWithLoading
-                        isLoading={isLoading}
-                        onClick={() =>
-                            this.fetchSearchTopstories(searchKey, page + 1)
-                        }
-                    >
-                        More
-                    </ButtonWithLoading>
+                    {error ? (
+                        <div className="interactions">
+                            <p>Something went wrong</p>
+                        </div>
+                    ) : (
+                        <Table list={list} onDismiss={this.onDismiss} />
+                    )}
+                    <div className="interactions">
+                        <ButtonWithLoading
+                            isLoading={isLoading}
+                            onClick={() =>
+                                this.fetchSearchTopstories(searchKey, page + 1)
+                            }
+                        >
+                            More
+                        </ButtonWithLoading>
+                    </div>
                 </div>
             </div>
         );
