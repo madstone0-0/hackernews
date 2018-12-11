@@ -122,7 +122,7 @@ class Table extends Component {
                             <span style={smallColumn}>
                                 <Button
                                     onClick={() => onDismiss(item.objectID)}
-                                    className="button-inline btn-info btn-primary"
+                                    className="button-inline"
                                 >
                                     Dismiss
                                 </Button>
