@@ -17,7 +17,6 @@ import {
 import Table from "../Table";
 import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
-import Ads from "../Ads";
 
 class App extends Component {
     constructor(props) {
@@ -39,33 +38,28 @@ class App extends Component {
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        // this.updateSearchTopstoriesState = this.updateSearchTopstoriesState.bind(
-        //     this,
-        // );
     }
 
     /* TODO fix this */
-    // updateSearchTopstoriesState(hits, page) {
-    //     return prevState => {
-    //         const { searchKey, results } = prevState;
+    updateSearchTopstoriesState = (hits, page) => prevState => {
+        const { searchKey, results } = prevState;
 
-    //         const oldHits =
-    //             results && results[searchKey] ? results[searchKey].hits : [];
+        const oldHits =
+            results && results[searchKey] ? results[searchKey].hits : [];
 
-    //         const updatedHits = {
-    //             ...oldHits,
-    //             ...hits,
-    //         };
+        const updatedHits = {
+            ...oldHits,
+            ...hits,
+        };
 
-    //         return {
-    //             results: {
-    //                 ...results,
-    //                 [searchKey]: { hits: updatedHits, page },
-    //             },
-    //             isLoading: false,
-    //         };
-    //     };
-    // }
+        return {
+            results: {
+                ...results,
+                [searchKey]: { hits: updatedHits, page },
+            },
+            isLoading: false,
+        };
+    };
 
     needsToSearchTopstories(searchTerm) {
         return !this.state.results[searchTerm];
@@ -84,18 +78,19 @@ class App extends Component {
     // Set top stories
     setSearchTopstories(result) {
         const { hits, page } = result;
-        const { searchKey, results } = this.state;
-        const oldHits =
-            results && results[searchKey] ? results[searchKey].hits : [];
-        const updatedHits = [...oldHits, ...hits];
-
-        this.setState({
-            results: {
-                results,
-                [searchKey]: { hits: updatedHits, page },
-            },
-            isLoading: false,
-        });
+        // const { searchKey, results } = this.state;
+        // const oldHits =
+        //     results && results[searchKey] ? results[searchKey].hits : [];
+        // const updatedHits = [...oldHits, ...hits];
+        //
+        // this.setState({
+        //     results: {
+        //         results,
+        //         [searchKey]: { hits: updatedHits, page },
+        //     },
+        //     isLoading: false,
+        // });
+        this.setState(this.updateSearchTopstoriesState(hits, page));
     }
 
     // Fetch the top stories
@@ -152,7 +147,6 @@ class App extends Component {
                         Search
                     </Search>
                 </div>
-                <Ads />
                 {error ? (
                     <div className="interactions">
                         <p>Something went wrong</p>
