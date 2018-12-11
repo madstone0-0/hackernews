@@ -33,27 +33,6 @@ class App extends Component {
         };
     }
 
-    /* TODO fix this */
-    updateSearchTopstoriesState = (hits, page) => prevState => {
-        const { searchKey, results } = prevState;
-
-        const oldHits =
-            results && results[searchKey] ? results[searchKey].hits : [];
-
-        const updatedHits = {
-            ...oldHits,
-            ...hits,
-        };
-
-        return {
-            results: {
-                ...results,
-                [searchKey]: { hits: updatedHits, page },
-            },
-            isLoading: false,
-        };
-    };
-
     needsToSearchTopstories = searchTerm => {
         return !this.state.results[searchTerm];
     };
@@ -71,19 +50,18 @@ class App extends Component {
     // Set top stories
     setSearchTopstories = result => {
         const { hits, page } = result;
-        // const { searchKey, results } = this.state;
-        // const oldHits =
-        //     results && results[searchKey] ? results[searchKey].hits : [];
-        // const updatedHits = [...oldHits, ...hits];
-        //
-        // this.setState({
-        //     results: {
-        //         results,
-        //         [searchKey]: { hits: updatedHits, page },
-        //     },
-        //     isLoading: false,
-        // });
-        this.setState(this.updateSearchTopstoriesState(hits, page));
+        const { searchKey, results } = this.state;
+        const oldHits =
+            results && results[searchKey] ? results[searchKey].hits : [];
+        const updatedHits = [...oldHits, ...hits];
+        
+        this.setState({
+            results: {
+                results,
+                [searchKey]: { hits: updatedHits, page },
+            },
+            isLoading: false,
+        });
     };
 
     // Fetch the top stories
