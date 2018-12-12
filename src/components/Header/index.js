@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 import Button from "../Button";
+import "./index.css";
 
 const Header = ({ toggleDarkTheme }) => {
     return (
@@ -11,9 +12,9 @@ const Header = ({ toggleDarkTheme }) => {
                     <small> The hacker news client</small>
                     <Button
                         onClick={toggleDarkTheme}
-                        className=" text-bottom float-right btn btn-sm btn-primary"
+                        className=" text-bottom float-right btn btn-sm btn-primary dark-button"
                     >
-                        Dark Theme
+                        Dark Theme <div className="badge">NEW</div>
                     </Button>
                 </h1>
             </div>

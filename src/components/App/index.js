@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { sortBy } from "lodash";
+import classNames from "classnames";
 import "./index.css";
 import {
     DEFAULT_HPP,
@@ -120,7 +121,7 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div className="container-fluid">
+            <div>
                 <div className={darkTheme ? "dark" : "default"}>
                     <Header toggleDarkTheme={this.toggleDarkTheme} />
                     <div className="page">
