@@ -16,6 +16,7 @@ import {
 } from "../constants";
 import Table from "../Table";
 import Search from "../Search";
+import Button from "../Button";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
 
@@ -27,6 +28,7 @@ class App extends Component {
         this.state = {
             result: null,
             searchKey: "",
+            darkTheme: false,
             searchTerm: DEFAULT_QUERY,
             error: null,
             isLoading: false,
@@ -54,7 +56,7 @@ class App extends Component {
         const oldHits =
             results && results[searchKey] ? results[searchKey].hits : [];
         const updatedHits = [...oldHits, ...hits];
-        
+
         this.setState({
             results: {
                 results,
@@ -100,42 +102,58 @@ class App extends Component {
         this.setState({ searchTerm: event.target.value });
     };
 
+    toggleDarkTheme = darkTheme => {
+        this.setState({ darkTheme: !this.state.darkTheme });
+    };
+
     render() {
-        const { searchTerm, results, searchKey, isLoading, error } = this.state;
+        const {
+            searchTerm,
+            results,
+            searchKey,
+            isLoading,
+            error,
+            darkTheme,
+        } = this.state;
         const page =
             (results && results[searchKey] && results[searchKey].page) || 0;
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
             <div className="container-fluid">
-                <Header />
-                <div className="page">
-                    <div className="interactions">
-                        {/* Passed values from the App component to the Search an table components */}
-                        <Search
-                            value={searchTerm}
-                            onChange={this.onSearchChange}
-                            onSubmit={this.onSearchSubmit}
-                        >
-                            Search
-                        </Search>
-                    </div>
-                    {error ? (
+                <div className={darkTheme ? "dark" : "default"}>
+                    <Header toggleDarkTheme={this.toggleDarkTheme} />
+                    <div className="page">
                         <div className="interactions">
-                            <p>Something went wrong</p>
+                            {/* Passed values from the App component to the Search an table components */}
+                            <Search
+                                value={searchTerm}
+                                onChange={this.onSearchChange}
+                                onSubmit={this.onSearchSubmit}
+                            >
+                                Search
+                            </Search>
                         </div>
-                    ) : (
-                        <Table list={list} onDismiss={this.onDismiss} />
-                    )}
-                    <div className="interactions">
-                        <ButtonWithLoading
-                            isLoading={isLoading}
-                            onClick={() =>
-                                this.fetchSearchTopstories(searchKey, page + 1)
-                            }
-                        >
-                            More
-                        </ButtonWithLoading>
+                        {error ? (
+                            <div className="interactions">
+                                <p>Something went wrong</p>
+                            </div>
+                        ) : (
+                            <Table list={list} onDismiss={this.onDismiss} />
+                        )}
+                        <div className="interactions">
+                            <ButtonWithLoading
+                                isLoading={isLoading}
+                                onClick={() =>
+                                    this.fetchSearchTopstories(
+                                        searchKey,
+                                        page + 1,
+                                    )
+                                }
+                            >
+                                More
+                            </ButtonWithLoading>
+                        </div>
                     </div>
                 </div>
             </div>
