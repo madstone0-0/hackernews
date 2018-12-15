@@ -23,3 +23,6 @@ Thumbs.db
 
 # Webstorm
 .idea/*
+
+# VS Code
+.vscode/*
