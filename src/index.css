@@ -1,4 +1,4 @@
-body {
+html,body {
   color: #222;
   background: #f4f4f4;
   font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -39,6 +39,10 @@ button {
 
 button:hover {
   color: #222;
+}
+
+button:focus {
+  outline: none;
 }
 
 *:focus {

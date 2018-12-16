@@ -122,7 +122,11 @@ class App extends Component {
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
             <div>
-                <div className={darkTheme ? "dark" : "default"}>
+                <div
+                    className={classNames("", {
+                        dark: darkTheme === true,
+                    })}
+                >
                     <Header toggleDarkTheme={this.toggleDarkTheme} />
                     <div className="page">
                         <div className="interactions">

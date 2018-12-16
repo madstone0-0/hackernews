@@ -12,9 +12,9 @@ const Header = ({ toggleDarkTheme }) => {
                     <small> The hacker news client</small>
                     <Button
                         onClick={toggleDarkTheme}
-                        className=" text-bottom float-right btn btn-sm btn-primary dark-button"
+                        className=" dark-button text-bottom float-right btn btn-sm btn-primary"
                     >
-                        Dark Theme <div className="badge">NEW</div>
+                        Dark Theme
                     </Button>
                 </h1>
             </div>
