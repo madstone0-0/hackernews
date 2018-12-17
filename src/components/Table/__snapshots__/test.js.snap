@@ -19,9 +19,7 @@ exports[`snapshots 1`] = `
         onClick={[Function]}
         type="button"
       >
-         
         Title
-         
       </button>
     </span>
     <span
@@ -36,9 +34,7 @@ exports[`snapshots 1`] = `
         onClick={[Function]}
         type="button"
       >
-         
         Author
-         
       </button>
     </span>
     <span
@@ -53,9 +49,7 @@ exports[`snapshots 1`] = `
         onClick={[Function]}
         type="button"
       >
-         
         Comments
-         
       </button>
     </span>
     <span
@@ -70,9 +64,7 @@ exports[`snapshots 1`] = `
         onClick={[Function]}
         type="button"
       >
-         
         Points
-         
       </button>
     </span>
     <span
@@ -86,24 +78,20 @@ exports[`snapshots 1`] = `
     </span>
   </div>
   <div
-    className="table-row row"
+    className="table-row col-xs-12"
   >
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "40%",
         }
       }
     >
-      <a
-        className="col-md-12"
-      >
+      <a>
         1
       </a>
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "30%",
@@ -113,7 +101,6 @@ exports[`snapshots 1`] = `
       1
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
@@ -124,7 +111,6 @@ exports[`snapshots 1`] = `
        comments
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
@@ -135,7 +121,6 @@ exports[`snapshots 1`] = `
        points
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
@@ -152,24 +137,20 @@ exports[`snapshots 1`] = `
     </span>
   </div>
   <div
-    className="table-row row"
+    className="table-row col-xs-12"
   >
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "40%",
         }
       }
     >
-      <a
-        className="col-md-12"
-      >
+      <a>
         2
       </a>
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "30%",
@@ -179,7 +160,6 @@ exports[`snapshots 1`] = `
       2
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
@@ -190,7 +170,6 @@ exports[`snapshots 1`] = `
        comments
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
@@ -201,7 +180,6 @@ exports[`snapshots 1`] = `
        points
     </span>
     <span
-      className="col-md-12"
       style={
         Object {
           "width": "10%",
