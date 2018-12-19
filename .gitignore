@@ -5,8 +5,8 @@
 .pnp.js
 # testing
 /coverage
-*test.js*
-/__snapshots__
+*.jest.js*
+*.snap
 # production
 /build
 # misc
@@ -28,4 +28,4 @@ Thumbs.db
 
 # VS Code
 .vscode/*
-__snapshots__
+*.snap
