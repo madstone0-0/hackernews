@@ -14,6 +14,7 @@ const props = {
     ],
     sortKey: "TITLE",
     isSortReverse: false,
+    onDismiss: () => (console.log("Hello Table")),
 };
 
 describe("Table", () => {
