@@ -17,7 +17,6 @@ import {
 } from "../constants";
 import Table from "../Table";
 import Search from "../Search";
-import Button from "../Button";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
 
@@ -78,11 +77,19 @@ class App extends Component {
             .catch(error => this.setState({ error }));
     };
 
-    componentDidMount = () => {
+    componentDidMount() {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-    };
+        // Timer for when to fetch stories when no stories are loaded
+        if (this.state.isLoading === true && this.state.result === null) {
+            setInterval(
+                this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE),
+                500,
+            );
+            console.log("Refreshed");
+        }
+    }
 
     // Dismiss stories
     onDismiss = id => {
@@ -103,7 +110,7 @@ class App extends Component {
         this.setState({ searchTerm: event.target.value });
     };
 
-    toggleDarkTheme = darkTheme => {
+    toggleDarkTheme = () => {
         this.setState({ darkTheme: !this.state.darkTheme });
     };
 
@@ -121,13 +128,11 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div>
-                <div
-                    className={classNames("", {
-                        dark: darkTheme === true,
-                    })}
-                >
-                    <Header toggleDarkTheme={this.toggleDarkTheme} />
+            <div className={classNames("", {
+                dark: darkTheme === true,
+            })}>
+                <div>
+                    <Header toggleDarkTheme={this.toggleDarkTheme}/>
                     <div className="page">
                         <div className="interactions">
                             {/* Passed values from the App component to the Search an table components */}
@@ -144,7 +149,7 @@ class App extends Component {
                                 <p>Something went wrong</p>
                             </div>
                         ) : (
-                            <Table list={list} onDismiss={this.onDismiss} />
+                            <Table list={list} onDismiss={this.onDismiss}/>
                         )}
                         <div className="interactions">
                             <ButtonWithLoading

@@ -21,6 +21,7 @@
   background: #424242;
   font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 100%;
 }
 
 .dark a {
@@ -65,20 +66,6 @@
 /* Table styles */
 .dark .page .table {
   margin: 20px 0;
-}
-
-.table-header {
-  display: flex;
-  line-height: 24px;
-  font-size: 16px;
-  padding: 0 10px;
-  justify-content: space-between;
-}
-
-.table-empty {
-  margin: 200px;
-  text-align: center;
-  font-size: 16px;
 }
 
 .dark .page .table-row {

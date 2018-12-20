@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Button from "../Button";
 import "./index.css";
 
@@ -20,6 +21,10 @@ const Header = ({ toggleDarkTheme }) => {
             </div>
         </header>
     );
+};
+
+Header.propTypes = {
+    toggleDarkTheme: PropTypes.func.isRequired,
 };
 
 export default Header;

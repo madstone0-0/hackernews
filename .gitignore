@@ -1,12 +1,21 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
-# testing
-/coverage
-*test.js*
-/__snapshots__
+# tests
+src/components/App/App.test.js
+src/components/Button/Button.test.js
+src/components/ButtonWithLoading/ButtonWithLoading.test.js
+src/components/Header/Header.test.js
+src/components/Search/Search.test.js
+src/components/Table/Table.test.js
+# snapshots
+src/components/App/__snapshots__/App.test.js.snap
+src/components/Button/__snapshots__/Button.test.js.snap
+src/components/ButtonWithLoading/__snapshots__/ButtonWithLoading.test.js.snap
+src/components/Header/__snapshots__/Header.test.js.snap
+src/components/Search/__snapshots__/Search.test.js.snap
+src/components/Table/__snapshots__/Table.test.js.snap
 # production
 /build
 # misc
@@ -28,4 +37,3 @@ Thumbs.db
 
 # VS Code
 .vscode/*
-__snapshots__
