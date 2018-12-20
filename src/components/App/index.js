@@ -86,7 +86,7 @@ class App extends Component {
         if (this.state.isLoading === false && this.state.result == null) {
             setInterval(
                 this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE),
-                5000,
+                500,
             );
             console.log("Refreshed");
         }
@@ -129,12 +129,10 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div>
-                <div
-                    className={classNames("", {
-                        dark: darkTheme === true,
-                    })}
-                >
+            <div className={classNames("", {
+                dark: darkTheme === true,
+            })}>
+                <div>
                     <Header toggleDarkTheme={this.toggleDarkTheme} />
                     <div className="page">
                         <div className="interactions">
