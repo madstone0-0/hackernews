@@ -53,3 +53,23 @@
     border-radius: 0;
     border-bottom: 1px solid #82b1ff;
 }
+
+/* Dark Table styles */
+.dark .page .table {
+    margin: 20px 0;
+}
+
+.dark .page .table-row {
+    display: flex;
+    line-height: 24px;
+    white-space: nowrap;
+    margin: 10px 0;
+    padding: 10px;
+    background: #757575;
+    border: 1px solid #424242;
+}
+
+.dark .page .button-active {
+    border-radius: 0;
+    border-bottom: 1px solid #ff1744;
+}

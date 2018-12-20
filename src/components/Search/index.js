@@ -3,9 +3,8 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "./index.css";
 
-const butonStyle = {
+const buttonStyle = {
     marginBottom: "5px",
 };
 
@@ -17,7 +16,7 @@ class Search extends Component {
             <div className="search">
                 <form
                     className="form form-group"
-                    style={butonStyle}
+                    style={buttonStyle}
                     onSubmit={onSubmit}
                 >
                     <input type="text" value={value} onChange={onChange} />
