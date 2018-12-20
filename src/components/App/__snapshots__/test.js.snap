@@ -1,122 +1,149 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`snapshots 1`] = `
-<div
-  className="page"
->
+<div>
   <div
-    className="interactions"
+    className=""
   >
-    <form
-      onSubmit={[Function]}
-    >
-      <input
-        onChange={[Function]}
-        type="text"
-        value="redux"
-      />
-      <button
-        className="btn btn-info"
-        type="submit"
+    <header>
+      <div
+        className="text-center card-header"
       >
-        <span
-          className="glyphicon glyphicon-search"
-        />
-         
-        Search
-      </button>
-    </form>
-  </div>
-  <div
-    className="table"
-  >
+        <h1>
+          HN Client
+          <small>
+             The hacker news client
+          </small>
+          <button
+            className=" dark-button text-bottom float-right btn btn-sm btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Dark Theme
+          </button>
+        </h1>
+      </div>
+    </header>
     <div
-      className="table-header"
+      className="page"
     >
-      <span
-        style={
-          Object {
-            "width": "40%",
-          }
-        }
+      <div
+        className="interactions"
       >
-        <button
-          className="button-inline"
-          onClick={[Function]}
-          type="button"
+        <div
+          className="search"
         >
-           
-          Title
-           
-        </button>
-      </span>
-      <span
-        style={
-          Object {
-            "width": "30%",
-          }
-        }
+          <form
+            className="form form-group"
+            onSubmit={[Function]}
+            style={
+              Object {
+                "marginBottom": "5px",
+              }
+            }
+          >
+            <input
+              onChange={[Function]}
+              type="text"
+              value="redux"
+            />
+            <button
+              className="btn btn-primary"
+              disabled={false}
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+      <div
+        className="table"
       >
-        <button
-          className="button-inline"
-          onClick={[Function]}
-          type="button"
+        <div
+          className="table-header"
         >
-           
-          Author
-           
-        </button>
-      </span>
-      <span
-        style={
-          Object {
-            "width": "10%",
-          }
-        }
+          <span
+            style={
+              Object {
+                "width": "40%",
+              }
+            }
+          >
+            <button
+              className="button-inline"
+              onClick={[Function]}
+              type="button"
+            >
+              Title
+            </button>
+          </span>
+          <span
+            style={
+              Object {
+                "width": "30%",
+              }
+            }
+          >
+            <button
+              className="button-inline"
+              onClick={[Function]}
+              type="button"
+            >
+              Author
+            </button>
+          </span>
+          <span
+            style={
+              Object {
+                "width": "10%",
+              }
+            }
+          >
+            <button
+              className="button-inline"
+              onClick={[Function]}
+              type="button"
+            >
+              Comments
+            </button>
+          </span>
+          <span
+            style={
+              Object {
+                "width": "10%",
+              }
+            }
+          >
+            <button
+              className="button-inline"
+              onClick={[Function]}
+              type="button"
+            >
+              Points
+            </button>
+          </span>
+          <span
+            style={
+              Object {
+                "width": "10%",
+              }
+            }
+          >
+            Archive
+          </span>
+        </div>
+      </div>
+      <div
+        className="interactions"
       >
-        <button
-          className="button-inline"
-          onClick={[Function]}
-          type="button"
-        >
-           
-          Comments
-           
-        </button>
-      </span>
-      <span
-        style={
-          Object {
-            "width": "10%",
-          }
-        }
-      >
-        <button
-          className="button-inline"
-          onClick={[Function]}
-          type="button"
-        >
-           
-          Points
-           
-        </button>
-      </span>
-      <span
-        style={
-          Object {
-            "width": "10%",
-          }
-        }
-      >
-        Archive
-      </span>
-    </div>
-  </div>
-  <div
-    className="interactions"
-  >
-    <div>
-      Loading...
+        <div>
+          <img
+            alt="Loading..."
+            src="loading.gif"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>

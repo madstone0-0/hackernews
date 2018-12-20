@@ -6,6 +6,6 @@ exports[`snapshots 1`] = `
   onClick={[Function]}
   type="button"
 >
-  Give me more daddy
+  Click Me
 </button>
 `;

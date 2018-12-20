@@ -1,22 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`snapshots 1`] = `
-<form
-  onSubmit={[Function]}
+<div
+  className="search"
 >
-  <input
-    onChange={[Function]}
-    type="text"
-  />
-  <button
-    className="btn btn-info"
-    type="submit"
+  <form
+    className="form form-group"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "marginBottom": "5px",
+      }
+    }
   >
-    <span
-      className="glyphicon glyphicon-search"
+    <input
+      onChange={[Function]}
+      type="text"
     />
-     
-     Search 
-  </button>
-</form>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      type="submit"
+    >
+       Search 
+    </button>
+  </form>
+</div>
 `;
