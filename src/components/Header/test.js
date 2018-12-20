@@ -3,22 +3,22 @@
 import ReactDOM from "react-dom";
 import renderer from "react-test-renderer";
 import React from "react";
-import Button from "./index";
+import Header from "./index";
 
-describe("Button", () => {
-    it("renders", () => {
+describe("Header", () => {
+    it("renders", function() {
         const div = document.createElement("div");
-        ReactDOM.render(<Button onClick={() => {
-            console.log("Clicked");
-        }}>Give me more daddy</Button>, div);
+        ReactDOM.render(<Header toggleDarkTheme={() => {
+            console.log("toggles");
+        }}/>, div);
     });
 });
 
 test("snapshots", () => {
     const component = renderer.create(
-        <Button onClick={() => {
-            console.log("Clicked");
-        }}>Click Me</Button>,
+        <Header toggleDarkTheme={() => {
+            console.log("toggled");
+        }}/>,
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();

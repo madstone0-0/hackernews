@@ -4,7 +4,7 @@ import { shallow } from "enzyme/build";
 import renderer from "react-test-renderer";
 import React from "react";
 import Table from "./index";
-import Adadpter from "enzyme-adapter-react-16";
+import Adapter from "enzyme-adapter-react-16";
 import * as Enzyme from "enzyme";
 
 const props = {
@@ -24,7 +24,7 @@ describe("Table", () => {
         ReactDOM.render(<Table {...props}/>, div);
     });
 
-    Enzyme.configure({ adapter: new Adadpter() });
+    Enzyme.configure({ adapter: new Adapter() });
 
     it("shows two items in a list", () => {
         const element = shallow(

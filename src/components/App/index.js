@@ -81,7 +81,15 @@ class App extends Component {
     componentDidMount = () => {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
-        this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
+
+        // Timer for when to fetch stories when no stories are loaded
+        if (this.state.isLoading === false && this.state.result == null) {
+            setInterval(
+                this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE),
+                5000,
+            );
+            console.log("Refreshed");
+        }
     };
 
     // Dismiss stories
