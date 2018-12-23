@@ -144,7 +144,6 @@ class App extends Component {
                     <Header toggleDarkTheme={this.toggleDarkTheme} />
                     <div className="page">
                         <div className="interactions">
-                            {/* Passed values from the App component to the Search an table components */}
                             <Search
                                 value={searchTerm}
                                 onChange={this.onSearchChange}

@@ -14,6 +14,10 @@ const SORTS = {
     POINTS: list => sortBy(list, "points").reverse(),
 };
 
+/**
+ * Sort component
+ * (not sure if should be refactored or not)
+ */
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
     const sortClass = classNames("button-inline", {
         "button-active": sortKey === activeSortKey,
@@ -36,7 +40,9 @@ const smallColumn = {
     width: "10%",
 };
 
-// Table component
+/**
+ * Table component
+ */
 class Table extends Component {
     constructor(props) {
         super(props);

@@ -8,26 +8,23 @@ const buttonStyle = {
     marginBottom: "5px",
 };
 
-// Search Component
-class Search extends Component {
-    render() {
-        const { value, onChange, onSubmit, children } = this.props;
-        return (
-            <div className="search">
-                <form
-                    className="form form-group"
-                    style={buttonStyle}
-                    onSubmit={onSubmit}
-                >
-                    <input type="text" value={value} onChange={onChange} />
-                    <Button bsStyle="primary" type="submit">
-                        {children}
-                    </Button>
-                </form>
-            </div>
-        );
-    }
-}
+/**
+ *  Search bar component
+ */
+const Search = ({ value, onChange, onSubmit, children }) => (
+    <div className="search">
+        <form
+            className="form form-group"
+            style={buttonStyle}
+            onSubmit={onSubmit}
+        >
+            <input type="text" value={value} onChange={onChange} />
+            <Button bsStyle="primary" type="submit">
+                {children}
+            </Button>
+        </form>
+    </div>
+);
 
 Search.propTypes = {
     value: PropTypes.string,

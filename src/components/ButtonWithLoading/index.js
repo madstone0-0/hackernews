@@ -3,9 +3,12 @@ import Loading from "../Loading";
 import Button from "../Button";
 import React from "react";
 import PropTypes from "prop-types";
-
+/**
+ * Used to render a button or loading animation
+ * depending on the condition
+ */
 const withLoading = Component => ({ isLoading, ...rest }) =>
-    isLoading ? <Loading/> : <Component {...rest} />;
+    isLoading ? <Loading /> : <Component {...rest} />;
 
 const ButtonWithLoading = withLoading(Button);
 
