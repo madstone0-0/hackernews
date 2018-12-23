@@ -20,6 +20,8 @@ import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
 
+var label = "Fetch called";
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -77,19 +79,11 @@ class App extends Component {
             .catch(error => this.setState({ error }));
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
-        // Timer for when to fetch stories when no stories are loaded
-        if (this.state.isLoading === true && this.state.result === null) {
-            setInterval(
-                this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE),
-                500,
-            );
-            console.log("Refreshed");
-        }
-    }
+    };
 
     // Dismiss stories
     onDismiss = id => {
@@ -105,11 +99,12 @@ class App extends Component {
         });
     };
 
-    //Search stories
+    // Search stories
     onSearchChange = event => {
         this.setState({ searchTerm: event.target.value });
     };
 
+    // Toggles Dark theme
     toggleDarkTheme = () => {
         this.setState({ darkTheme: !this.state.darkTheme });
     };
@@ -128,11 +123,13 @@ class App extends Component {
         const list =
             (results && results[searchKey] && results[searchKey].hits) || [];
         return (
-            <div className={classNames("", {
-                dark: darkTheme === true,
-            })}>
+            <div
+                className={classNames("", {
+                    dark: darkTheme === true,
+                })}
+            >
                 <div>
-                    <Header toggleDarkTheme={this.toggleDarkTheme}/>
+                    <Header toggleDarkTheme={this.toggleDarkTheme} />
                     <div className="page">
                         <div className="interactions">
                             {/* Passed values from the App component to the Search an table components */}
@@ -149,7 +146,7 @@ class App extends Component {
                                 <p>Something went wrong</p>
                             </div>
                         ) : (
-                            <Table list={list} onDismiss={this.onDismiss}/>
+                            <Table list={list} onDismiss={this.onDismiss} />
                         )}
                         <div className="interactions">
                             <ButtonWithLoading
