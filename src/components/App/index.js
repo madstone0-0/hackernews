@@ -20,8 +20,6 @@ import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
 
-var label = "Fetch called";
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -36,12 +34,16 @@ class App extends Component {
             isLoading: false,
         };
     }
-
+    /**
+     * Returns boolean to decide whether to search stories
+     */
     needsToSearchTopstories = searchTerm => {
         return !this.state.results[searchTerm];
     };
 
-    // OnSubmit function for search button enables server side searching
+    /**
+     *  OnSubmit function for search button enables server side searching
+     */
     onSearchSubmit = event => {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
@@ -51,7 +53,9 @@ class App extends Component {
         event.preventDefault();
     };
 
-    // Set top stories
+    /**
+     * Set top stories
+     */
     setSearchTopstories = result => {
         const { hits, page } = result;
         const { searchKey, results } = this.state;
@@ -68,7 +72,9 @@ class App extends Component {
         });
     };
 
-    // Fetch the top stories
+    /**
+     * Fetch the top stories
+     */
     fetchSearchTopstories = (searchTerm, page = 0) => {
         this.setState({ isLoading: true });
         fetch(
@@ -85,7 +91,9 @@ class App extends Component {
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
     };
 
-    // Dismiss stories
+    /**
+     * To handle dismiss clicks
+     */
     onDismiss = id => {
         const { searchKey, results } = this.state;
         const { hits, page } = results[searchKey];
@@ -99,12 +107,16 @@ class App extends Component {
         });
     };
 
-    // Search stories
+    /**
+     * To handle searches
+     */
     onSearchChange = event => {
         this.setState({ searchTerm: event.target.value });
     };
 
-    // Toggles Dark theme
+    /**
+     * Toggles dark theme
+     */
     toggleDarkTheme = () => {
         this.setState({ darkTheme: !this.state.darkTheme });
     };
