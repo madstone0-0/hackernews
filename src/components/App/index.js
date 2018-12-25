@@ -168,6 +168,7 @@ class App extends Component {
                                         page + 1,
                                     )
                                 }
+                                className="button-with-loading"
                             >
                                 More
                             </ButtonWithLoading>
