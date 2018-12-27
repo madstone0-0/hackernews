@@ -14,6 +14,10 @@ const SORTS = {
     POINTS: list => sortBy(list, "points").reverse(),
 };
 
+/**
+ * Sort component
+ * (not sure if should be refactored or not)
+ */
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
     const sortClass = classNames("button-inline", {
         "button-active": sortKey === activeSortKey,
@@ -36,7 +40,9 @@ const smallColumn = {
     width: "10%",
 };
 
-// Table component
+/**
+ * Table component
+ */
 class Table extends Component {
     constructor(props) {
         super(props);
@@ -68,7 +74,7 @@ class Table extends Component {
         return (
             <div className="table">
                 <div className="table-header">
-                    <span style={{ width: "40%" }}>
+                    <span className="title-header">
                         <Sort
                             sortKey={"TITLE"}
                             onSort={this.onSort}
@@ -77,7 +83,7 @@ class Table extends Component {
                             Title
                         </Sort>
                     </span>
-                    <span style={{ width: "30%" }}>
+                    <span className="author-header">
                         <Sort
                             sortKey={"AUTHOR"}
                             onSort={this.onSort}
@@ -86,7 +92,7 @@ class Table extends Component {
                             Author
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>
+                    <span className="comments-header" >
                         <Sort
                             sortKey={"COMMENTS"}
                             onSort={this.onSort}
@@ -95,7 +101,7 @@ class Table extends Component {
                             Comments
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>
+                    <span className="points-header">
                         <Sort
                             sortKey={"POINTS"}
                             onSort={this.onSort}
@@ -104,7 +110,9 @@ class Table extends Component {
                             Points
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>Archive</span>
+                    <span className="archive-header">
+                        Archive
+                    </span>
                 </div>
                 {reverseSortedList.map(item => {
                     return (

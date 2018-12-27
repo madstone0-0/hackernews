@@ -21,4 +21,4 @@ A minimalistic hacker news clone that you find all the stories you love through 
 - `cd hackernews`
 - `npm install`
 - `npm start`
-- visit http://localhost:3000/
+- visit <http://localhost:3000/>

@@ -3,7 +3,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../Button";
 import "./index.css";
-
+/**
+ * Renders app title and dark theme button
+ */
 const Header = ({ toggleDarkTheme }) => {
     return (
         <header>
