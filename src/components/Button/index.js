@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 
+/**
+ * Button component for rendering buttons
+ */
 const Button = props => {
     const { onClick, className, children } = props;
     return (
