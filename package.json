@@ -1,6 +1,6 @@
 {
   "name": "hackernews",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "author": "madstone0-0",
   "dependencies": {
