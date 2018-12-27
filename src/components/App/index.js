@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
+import ReactGA from "react-ga";
 import "./index.css";
 import {
     DEFAULT_HPP,
@@ -19,6 +20,9 @@ import Table from "../Table";
 import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
+
+ReactGA.initialize("UA-131446100-1");
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
     constructor(props) {
