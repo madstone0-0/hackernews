@@ -55,6 +55,10 @@ class App extends Component {
             this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
         }
         event.preventDefault();
+        ReactGA.event({
+            category: "Page Interactions",
+            action: "Searched a topic",
+        });
     };
 
     /**
@@ -109,6 +113,10 @@ class App extends Component {
                 [searchKey]: { hits: updatedHits, page },
             },
         });
+        ReactGA.event({
+            category: "Page Interactions",
+            action: "Dismissed a link",
+        });
     };
 
     /**
@@ -123,6 +131,10 @@ class App extends Component {
      */
     toggleDarkTheme = () => {
         this.setState({ darkTheme: !this.state.darkTheme });
+        ReactGA.event({
+            category: "Page Interactions",
+            action: "Enabled dark theme",
+        });
     };
 
     render() {
