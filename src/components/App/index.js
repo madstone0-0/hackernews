@@ -21,7 +21,7 @@ import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
 
-ReactGA.initialize("UA-131446100-1");
+ReactGA.initialize("UA-131448417-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
