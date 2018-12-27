@@ -2,6 +2,8 @@
     margin-top: 10px;
 }
 
-header h1 {
-    font-size: 32px;
+@media only screen and (max-width: 768px) {
+    header h1 {
+        font-size: 32px;
+    }
 }

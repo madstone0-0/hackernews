@@ -74,7 +74,7 @@ class Table extends Component {
         return (
             <div className="table">
                 <div className="table-header">
-                    <span style={{ width: "40%" }}>
+                    <span className="title-header">
                         <Sort
                             sortKey={"TITLE"}
                             onSort={this.onSort}
@@ -83,7 +83,7 @@ class Table extends Component {
                             Title
                         </Sort>
                     </span>
-                    <span style={{ width: "30%" }}>
+                    <span className="author-header">
                         <Sort
                             sortKey={"AUTHOR"}
                             onSort={this.onSort}
@@ -92,7 +92,7 @@ class Table extends Component {
                             Author
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>
+                    <span className="comments-header" >
                         <Sort
                             sortKey={"COMMENTS"}
                             onSort={this.onSort}
@@ -101,7 +101,7 @@ class Table extends Component {
                             Comments
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>
+                    <span className="points-header">
                         <Sort
                             sortKey={"POINTS"}
                             onSort={this.onSort}
@@ -110,7 +110,9 @@ class Table extends Component {
                             Points
                         </Sort>
                     </span>
-                    <span style={{ width: "10%" }}>Archive</span>
+                    <span className="archive-header">
+                        Archive
+                    </span>
                 </div>
                 {reverseSortedList.map(item => {
                     return (

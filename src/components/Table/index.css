@@ -10,6 +10,18 @@
     justify-content: space-between;
 }
 
+.title-header {
+    width: 40%;
+}
+
+.author-header {
+    width: 30%
+}
+
+.comments-header, .points-header, ,archive-header {
+    width: 10%
+}
+
 .table-empty {
     margin: 200px;
     text-align: center;
@@ -72,4 +84,27 @@
 .dark .page .button-active {
     border-radius: 0;
     border-bottom: 1px solid #ff1744;
+}
+
+@media only screen and (max-width: 768px) {
+    .table-header {
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .table-row {
+        font-size: 12px;
+    }
+
+    .title-header {
+        width: 20%;
+    }
+    
+    .author-header {
+        width: 15%
+    }
+    
+    .comments-header, .points-header, ,archive-header {
+        width: 5%
+    }
 }

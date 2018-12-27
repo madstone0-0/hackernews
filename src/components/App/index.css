@@ -9,11 +9,7 @@
     margin-bottom: 5px;
 }
 
-.dark .search button,
-.dark .dark-button {
-    background-color: #ff1744;
-    border: 1px solid #ff1744;
-}
+/* DARK THEME */
 
 .dark,
 .dark html {
@@ -29,13 +25,6 @@
     text-decoration: none;
 }
 
-.dark button:hover {
-    color: #f4f4f4;
-}
-
-.dark button {
-    border-color: #212121;
-}
 
 .dark a:hover {
     text-decoration: underline;
@@ -55,6 +44,7 @@
     border: 1px solid #dddddd;
 }
 
+/* Button styles */
 .dark .btn-primary:not(:disabled):not(.disabled).active,
 .dark .btn-primary:not(:disabled):not(.disabled):active,
 .show > .btn-primary.dropdown-toggle {
@@ -69,6 +59,20 @@
 .dark .btn-primary:not(:disabled):not(.disabled):active:focus,
 .dark .show > .dark .btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(234, 7, 7, 0.5);
+}
+
+.dark .search button,
+.dark .dark-button {
+    background-color: #ff1744;
+    border: 1px solid #ff1744;
+}
+
+.dark button:hover {
+    color: #f4f4f4;
+}
+
+.dark button {
+    border-color: #212121;
 }
 
 /* Table styles */
