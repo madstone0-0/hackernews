@@ -1,0 +1,58 @@
+@import "./components/Global_Sass/variables";
+
+html, body {
+    color: $text_color_default;
+    background: $background_color_default;
+    font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    height: 100%;
+}
+
+#hacker-news-root {
+    height: inherit;
+}
+
+body {
+    a {
+        color: $text_color_default;
+        text-decoration: none;
+
+        :hover {
+            text-decoration: underline;
+        }
+    }
+
+    ul li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    input {
+        padding: 10px;
+        border-radius: 5px;
+        outline: none;
+        margin-right: 10px;
+        border: 1px solid $border_color_default;
+    }
+
+    button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid $border_color_default;
+        background: transparent;
+        color: $button_color_default;
+        cursor: pointer;
+
+        :hover {
+            color: $text_color_default;
+        }
+
+        :focus {
+            outline: none;
+        }
+    }
+
+    *:focus {
+        outline: none;
+    }
+}

@@ -49,16 +49,16 @@ class App extends Component {
      *  OnSubmit function for search button enables server side searching
      */
     onSearchSubmit = event => {
+        ReactGA.event({
+            category: "Page Interactions",
+            action: "Searched a topic",
+        });
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         if (this.needsToSearchTopstories(searchTerm)) {
             this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
         }
         event.preventDefault();
-        ReactGA.event({
-            category: "Page Interactions",
-            action: "Searched a topic",
-        });
     };
 
     /**
@@ -103,6 +103,10 @@ class App extends Component {
      * To handle dismiss clicks
      */
     onDismiss = id => {
+        ReactGA.event({
+            category: "Page Interactions",
+            action: "Dismissed a link",
+        });
         const { searchKey, results } = this.state;
         const { hits, page } = results[searchKey];
         const isNotID = item => item.objectID !== id;
@@ -112,10 +116,6 @@ class App extends Component {
                 results,
                 [searchKey]: { hits: updatedHits, page },
             },
-        });
-        ReactGA.event({
-            category: "Page Interactions",
-            action: "Dismissed a link",
         });
     };
 
@@ -130,11 +130,11 @@ class App extends Component {
      * Toggles dark theme
      */
     toggleDarkTheme = () => {
-        this.setState({ darkTheme: !this.state.darkTheme });
         ReactGA.event({
             category: "Page Interactions",
             action: "Enabled dark theme",
         });
+        this.setState({ darkTheme: !this.state.darkTheme });
     };
 
     render() {
