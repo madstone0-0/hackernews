@@ -92,7 +92,7 @@ class Table extends Component {
                             Author
                         </Sort>
                     </span>
-                    <span className="comments-header" >
+                    <span className="comments-header">
                         <Sort
                             sortKey={"COMMENTS"}
                             onSort={this.onSort}
@@ -110,9 +110,7 @@ class Table extends Component {
                             Points
                         </Sort>
                     </span>
-                    <span className="archive-header">
-                        Archive
-                    </span>
+                    <span className="archive-header">Archive</span>
                 </div>
                 {reverseSortedList.map(item => {
                     return (
@@ -124,12 +122,8 @@ class Table extends Component {
                                 <a href={item.url}>{item.title}</a>
                             </span>
                             <span style={midColumn}>{item.author}</span>
-                            <span style={smallColumn}>
-                                {item.num_comments} comments
-                            </span>
-                            <span style={smallColumn}>
-                                {item.points} points
-                            </span>
+                            <span style={smallColumn}>{item.num_comments}</span>
+                            <span style={smallColumn}>{item.points}</span>
                             <span style={smallColumn}>
                                 <Button
                                     onClick={() => onDismiss(item.objectID)}

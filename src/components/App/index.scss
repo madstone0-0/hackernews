@@ -23,8 +23,6 @@
 
     a {
         color: #ffffff;
-        text-decoration: none;
-
         :hover {
             text-decoration: underline;
         }
@@ -46,8 +44,13 @@
 
     .btn-primary:not(:disabled):not(.disabled).active,
     .btn-primary:not(:disabled):not(.disabled):active,
-    .show > .btn-primary.dropdown-toggle {
+    .show > .btn-primary.dropdown-toggle, .btn-primary.focus, .btn-primary:focus {
         box-shadow: 0 0 0 0.2rem rgba(234, 7, 7, 0.5);
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+        background-color: #ff1744;
+        border: 1px solid #ff1744;
     }
 
     .search button,

@@ -21,7 +21,6 @@
 
 .dark a {
   color: #ffffff;
-  text-decoration: none;
 }
 
 .dark a :hover {
@@ -44,8 +43,13 @@
 
 .dark .btn-primary:not(:disabled):not(.disabled).active,
 .dark .btn-primary:not(:disabled):not(.disabled):active,
-.dark .show > .btn-primary.dropdown-toggle {
+.dark .show > .btn-primary.dropdown-toggle, .dark .btn-primary.focus, .dark .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(234, 7, 7, 0.5);
+}
+
+.dark .btn-primary:not(:disabled):not(.disabled).active, .dark .btn-primary:not(:disabled):not(.disabled):active, .dark .show > .btn-primary.dropdown-toggle {
+  background-color: #ff1744;
+  border: 1px solid #ff1744;
 }
 
 .dark .search button,

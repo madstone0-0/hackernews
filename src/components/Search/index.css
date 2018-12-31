@@ -1,0 +1,19 @@
+.search .form > button.btn.btn-primary {
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .search .search-bar {
+    width: 270px;
+    margin-right: 5px;
+  }
+  .search .search-button {
+    margin-bottom: 8px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .search .search-button {
+    margin-top: 5px;
+  }
+}
