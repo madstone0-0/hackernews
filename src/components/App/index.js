@@ -20,9 +20,7 @@ import Table from "../Table";
 import Search from "../Search";
 import ButtonWithLoading from "../ButtonWithLoading";
 import Header from "../Header";
-
-ReactGA.initialize("UA-131448417-1");
-ReactGA.pageview(window.location.pathname + window.location.search);
+import Footer from "../Footer";
 
 class App extends Component {
     constructor(props) {
@@ -94,6 +92,8 @@ class App extends Component {
     };
 
     componentDidMount = () => {
+        ReactGA.initialize("UA-131448417-1");
+        ReactGA.pageview(window.location.pathname + window.location.search);
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
@@ -190,6 +190,7 @@ class App extends Component {
                             </ButtonWithLoading>
                         </div>
                     </div>
+                    <Footer/>
                 </div>
             </div>
         );

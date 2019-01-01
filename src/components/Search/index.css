@@ -2,6 +2,10 @@
   margin-bottom: 5px;
 }
 
+.search .search-bar:focus {
+  border: 1px solid #0069D9;
+}
+
 @media only screen and (max-width: 768px) {
   .search .search-bar {
     width: 270px;
