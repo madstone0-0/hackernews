@@ -41,6 +41,10 @@
   border: 1px solid #dddddd;
 }
 
+.dark .search .search-bar:focus {
+  border-color: #ff1744;
+}
+
 .dark .btn-primary:not(:disabled):not(.disabled).active,
 .dark .btn-primary:not(:disabled):not(.disabled):active,
 .dark .show > .btn-primary.dropdown-toggle, .dark .btn-primary.focus, .dark .btn-primary:focus {
