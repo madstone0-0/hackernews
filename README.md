@@ -1,8 +1,10 @@
 # HN Client
 
-A minimalistic hacker news clone that you find all the stories you love through a less intimidating interface. [HN Client](https://hacker-news-client-131.herokuapp.com "The actual app")
+A minimalistic hacker news clone that enables you to find all the stories you love through a less intimidating interface. [HN Client](https://hacker-news-client-131.herokuapp.com "The actual app")
 
-`placeholder`
+![Default Light Theme](C:\Users\Madiba\Programming\Code Playground Reactjs\hackernews\images\hn_client_light.jpg)
+
+![Dark theme](C:\Users\Madiba\Programming\Code Playground Reactjs\hackernews\images\hn_client_dark.jpg)
 
 ## Features
 
@@ -10,7 +12,7 @@ A minimalistic hacker news clone that you find all the stories you love through 
   - React (create-react-app)
   - Bootstrap
   - react-bootstrap
-  - Hacker news api provided by [Angolia]()
+  - Hacker news api provided by [Algolia](https://www.algolia.com/)
 - features:
   - Search bar
   - Dark theme
