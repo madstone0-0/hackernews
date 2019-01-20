@@ -190,7 +190,7 @@ class App extends Component {
                             </ButtonWithLoading>
                         </div>
                     </div>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         );
