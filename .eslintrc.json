@@ -1,29 +1,25 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "extends": "eslint:recommended",
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "settings":{
-	  "import/ignore": {
-		  "*.js"
-	  }
-  },
-  "plugins": ["react"],
-  "rules": {
-    "indent": ["warn", 4],
-    "linebreak-style": ["error", "windows"],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
-    "no-console": "off"
-  }
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"extends": "eslint:recommended",
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": ["react"],
+	"rules": {
+		"indent": ["warn", 4],
+		"linebreak-style": ["error", "windows"],
+		"quotes": ["error", "double"],
+		"semi": ["error", "always"],
+		"no-console": "off",
+		"react/prop-types": 0
+	}
 }
