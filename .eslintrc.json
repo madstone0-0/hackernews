@@ -20,6 +20,6 @@
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
 		"no-console": "off",
-		"react/forbid-foreign-prop-types": 0
+		"react/prop-types": 0
 	}
 }
