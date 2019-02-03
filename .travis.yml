@@ -1,10 +1,13 @@
+warnings_are_errors: false
 language: node_js
 node_js:
-  - "stable"
+- stable
 cache:
   directories:
   - node_modules
 script:
-  - npm run build
+- npm run build
 deploy:
   provider: heroku
+  api_key:
+    secure: bd2mv3su1kWsPC5Mo4kmP3/ITVaYmKR8qRVsieGdmxUca1BsW1BNKjms9qctJ0genQC0CVS4KsB7PwG7z3f0gTWFRWEABZopGgvncVRLMCn2i+nXU1iu1wmDKg6zwQ+gPvZbsoUJogDwIp2UKi/fBbcW8ECTQZlIy7CroGQjj8fG1UnBmc9u/0+uWyN8VbGsXoAjEGrhq6cetgRSmoyyWqO4XvkQbpVtnLcVVsaH9U0vGMDkmz4IDrCIqC+gVFzQrU+lLyOfB6KSR5tqZx/kC8pUjzfLswJOHo6zZn7LhVWlRdz/NMtleL5iZEnyTzGj/m4aexSuwS/3B67K2S5TPVxW5CFEdNkQ00wHVsZDg0fZtSU+m/t4ZvJ/9TkOr5etfZubV5i6onM7WBzIDXpURAkQHS7GfguuslpYpNESgZSwAA6vwtPXwWOr72LYNuM4oPsNX5C+pvGN17kStc+EDDVV+xyPUCu5E+37oQso+4ayL3NIKHCAF/KTtOLIWHEPGHKXpMwZIwWG05Nc1X4+/vcD98C65bKjqZmIJSStlT3hlKUvaA7qZKvUNQJWqz0Z8Z7yPjjWczCM66o53cMQGrmxLi+GTzYZMYil69lrwchsMnUZwXYGf/quxTbBVTo7f9t/VryPMp4zrN2qmi6EgvDyS0INvPBtzZ3bayIBYFA=
