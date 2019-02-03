@@ -13,6 +13,11 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "settings":{
+	  "import/ignore": {
+		  "*.js"
+	  }
+  },
   "plugins": ["react"],
   "rules": {
     "indent": ["warn", 4],
