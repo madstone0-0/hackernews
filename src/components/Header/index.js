@@ -17,7 +17,7 @@ const Header = ({ toggleDarkTheme }) => {
                         onClick={toggleDarkTheme}
                         className=" dark-button text-bottom float-right btn btn-sm btn-primary"
                     >
-                        Dark Theme
+                        Join The Dark Side
                     </Button>
                 </h1>
             </div>
