@@ -119,7 +119,7 @@ class Table extends Component {
                             className="table-row col-xs-12"
                         >
                             <span style={largeColumn}>
-                                <a href={item.url}>{item.title}</a>
+                                <a target="_blank" href={item.url}>{item.title}</a>
                             </span>
                             <span style={midColumn}>{item.author}</span>
                             <span style={smallColumn}>{item.num_comments}</span>
