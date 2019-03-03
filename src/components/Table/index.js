@@ -30,6 +30,13 @@ const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
     );
 };
 
+Sort.propTypes = {
+    sortKey: PropTypes.string.isRequired,
+    onSort: PropTypes.func.isRequired,
+    children: PropTypes.string,
+    activeSortKey: PropTypes.string,
+};
+
 const largeColumn = {
     width: "40%",
 };
@@ -119,7 +126,13 @@ class Table extends Component {
                             className="table-row col-xs-12"
                         >
                             <span style={largeColumn}>
-                                <a target="_blank" href={item.url}>{item.title}</a>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href={item.url}
+                                >
+                                    {item.title}
+                                </a>
                             </span>
                             <span style={midColumn}>{item.author}</span>
                             <span style={smallColumn}>{item.num_comments}</span>

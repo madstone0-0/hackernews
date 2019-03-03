@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { sortBy } from "lodash";
 import classNames from "classnames";
 import ReactGA from "react-ga";
+import AdSense from "react-adsense";
 import "./index.css";
 import {
     DEFAULT_HPP,
@@ -168,6 +169,17 @@ class App extends Component {
                                 Search
                             </Search>
                         </div>
+                        <AdSense.Google
+                            client="ca-pub-1454292768438166"
+                            slot="true"
+                            style={{
+                                width: "500px",
+                                height: "250px",
+                                display: "block",
+                                margin: "10px auto",
+                            }}
+                            responsive="true"
+                        />
                         {error ? (
                             <div className="interactions">
                                 <p>Something went wrong</p>
