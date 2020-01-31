@@ -42,7 +42,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.1.6",
+    "@babel/core": "^7.8.4",
     "ava": "^0.16.0",
     "co-exec": "^1.0",
     "codecov": "^1.0.1",
