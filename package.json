@@ -45,7 +45,7 @@
     "@babel/core": "^7.1.6",
     "ava": "^0.16.0",
     "co-exec": "^1.0",
-    "codecov": "^1.0.1",
+    "codecov": "^3.6.5",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "ghooks": "^1.2.4",
